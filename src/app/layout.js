@@ -1,6 +1,5 @@
 import "./globals.css";
-import { fira_sans } from "@/app/ui/fonts";
-
+import { fira_sans } from "./ui/fonts";
 
 export const metadata = {
   title: {
