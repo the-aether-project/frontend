@@ -1,4 +1,4 @@
-import { ArrowRight, Monitor, Share2, Shield, Zap, Facebook, Instagram, Linkedin, MessageSquare } from 'lucide-react';
+import { ArrowRight, Share2, Zap, Shield, Facebook, Instagram, Linkedin, MessageSquare } from 'lucide-react';
 import { alfa_slab } from './ui/fonts';
 
 export default function Home() {
@@ -9,11 +9,10 @@ export default function Home() {
     { id: 3, title: "Start Sharing", src: "/3rdstep.jpeg" }
   ];
 
-
   const features_data = [
-    { id: 1, title: "Lightning Fast", description: "Experience minimal latency with our optimized connection protocols" },
-    { id: 2, title: "Secure by Design", description: "End-to-end encryption and enterprise-grade security protocols" },
-    { id: 3, title: "Easy Sharing", description: "Share resources across devices with just a few clicks" },
+    { id: 1, title: "Lightning Fast", description: "Experience minimal latency with our optimized connection protocols", comp: Zap },
+    { id: 2, title: "Secure by Design", description: "End-to-end encryption and enterprise-grade security protocols", comp: Shield },
+    { id: 3, title: "Easy Sharing", description: "Share resources across devices with just a few clicks", comp: Share2 },
   ]
 
   const choose_aether_data = [
@@ -53,17 +52,17 @@ export default function Home() {
               <div
                 key={each.id}
                 className="flex flex-col  justify-between">
-                <div className="relative w-96">
+                <div className="relative w-96 shadow-md">
                   <img
                     src={each.src}
                     alt="First Step"
-                    className="w-full rounded-3xl border-8  border-gray-300 shadow-lg"
+                    className="w-full rounded-3xl border-8  border-gray-300 shadow-lg hover:shadow-inner"
                   />
                   <div className="absolute -top-4 -left-4 w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-xl font-bold shadow-inner">
                     {each.id}
                   </div>
                 </div>
-                <h3 className={`text-2xl font-semibold text-center bg-secondary text-white p-2`}>{each.title}</h3>
+                <h3 className={`text-2xl font-semibold text-center  text-gray-300 w-full p-7  self-start `}>{each.title}</h3>
               </div>
 
             ))
@@ -82,7 +81,7 @@ export default function Home() {
                 className="bg-white p-6 rounded-xl shadow-lg space-y-4"
               >
                 <div className="h-12 w-12 bg-purple-100 rounded-full flex items-center justify-center">
-                  <Share2 className="h-6 w-6 text-purple-600" />
+                  <each.comp className="h-6 w-6 text-purple-600" />
                 </div>
                 <h3 className="text-xl font-semibold">{each.title}</h3>
                 <p className="text-gray-600">
