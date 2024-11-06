@@ -26,42 +26,44 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16">
-        <div className="text-center space-y-8">
-          <h1 className={`text-5xl font-bold text-primary  ${alfa_slab.className} `}>Welcome to Aether</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+
+        <div className="text-center space-y-8 pt-10">
+          <h1 className={`text-6xl font-bold text-primary  ${alfa_slab.className} `}>Welcome to Aether</h1>
+          <p className="text-3xl text-gray-600 max-w-2xl mx-auto">
             Share desktop resources seamlessly across devices with enterprise-grade security
           </p>
           <div className="flex justify-center gap-4">
-            <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center">
+            <button className="px-8 py-4 bg-secondary text-white rounded-lg hover:bg-primary flex items-center">
               Get Started <ArrowRight className="ml-2 h-4 w-4" />
             </button>
-            <button className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+            <button className="px-8 py-4 border border-secondary rounded-lg hover:primary hover:bg-primary hover:text-white">
               Learn More
             </button>
           </div>
         </div>
       </div>
       {/* how it works section*/}
-      <div className="container mx-auto px-4 py-16">
-        <h2 className={`text-3xl font-bold text-center mb-12 ${alfa_slab.className} text-primary `}>How It Works</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="container mx-auto px-4 py-16 flex flex-col justify-center items-center bg-secondary">
+
+        <h2 className={`text-3xl font-bold text-center mb-12 ${alfa_slab.className} text-white border-b-[12px]  inline-block border-tertiary `}>How It Works</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3  gap-x-20">
 
           {
             how_it_works_data.map(each => (
               <div
                 key={each.id}
-                className="">
-                <div className="relative">
+                className="flex flex-col  justify-between">
+                <div className="relative w-96">
                   <img
                     src={each.src}
                     alt="First Step"
-                    className="w-full rounded-lg shadow-lg"
+                    className="w-full rounded-3xl border-8  border-gray-300 shadow-lg"
                   />
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
-                    1
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-xl font-bold shadow-inner">
+                    {each.id}
                   </div>
                 </div>
-                <h3 className={`text-xl font-semibold text-center bg-secondary text-white p-2`}>{each.title}</h3>
+                <h3 className={`text-2xl font-semibold text-center bg-secondary text-white p-2`}>{each.title}</h3>
               </div>
 
             ))
@@ -70,8 +72,8 @@ export default function Home() {
         </div>
       </div>
       {/* Features Section */}
-      <div className="container mx-auto px-4 py-16">
-        <h2 className={`text-3xl font-bold text-center mb-12 ${alfa_slab.className}  text-primary `}>Our features</h2>
+      <div className="container mx-auto px-4 py-16 flex flex-col justify-center items-center  ">
+        <h2 className={`text-3xl font-bold text-center mb-12 ${alfa_slab.className}  text-primary border-b-[12px]  inline-block border-tertiary`}>Our features</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {
             features_data.map(each => (
@@ -95,17 +97,21 @@ export default function Home() {
       </div>
 
       {/* Stats Section */}
-      <div className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className={`text-3xl font-bold text-center mb-12 ${alfa_slab.className}  text-primary`}>Why Choose Aether?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <div className="bg-primary py-16 ">
+        <div className="container mx-auto px-4 ">
+
+          <div className='flex  justify-center '>
+            <h2 className={`text-3xl font-bold text-center mb-12 ${alfa_slab.className}  text-white border-b-[12px]  inline-block border-tertiary`}>Why Choose Aether?</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center text-white py-10">
             {
               choose_aether_data.map(each => (
                 <div
                   key={each.id}
                 >
-                  <h3 className="text-4xl font-bold text-blue-600">{each.title}</h3>
-                  <p className="text-gray-600 mt-2">{each.description}</p>
+                  <h3 className="text-4xl font-bold text-tertiary">{each.title}</h3>
+                  <p className=" mt-2">{each.description}</p>
                 </div>
               ))
             }
@@ -117,7 +123,9 @@ export default function Home() {
       {/* Join Our Community Section */}
       <div className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
-          <h2 className={`text-3xl font-bold text-center mb-8 ${alfa_slab.className}  text-primary`}>Join Our Community</h2>
+          <div className='flex justify-center'>
+            <h2 className={`text-3xl font-bold text-center mb-8 ${alfa_slab.className}  text-primary border-b-[12px]  inline-block border-tertiary`}>Join Our Community</h2>
+          </div>
           <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
             Connect with us on social media to stay updated with the latest features, tips, and community highlights.
           </p>
@@ -152,6 +160,6 @@ export default function Home() {
 
         </div>
       </div>
-    </div>
+    </div >
   );
 }

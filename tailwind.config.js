@@ -12,7 +12,7 @@ module.exports = {
         foreground: "var(--foreground)",
         primary: "#003161",
         secondary: "#006A67",
-        tertiary: "#FFF4B7"
+        tertiary: "#ffc832"
       },
     },
   },
