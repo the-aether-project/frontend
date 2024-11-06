@@ -1,6 +1,8 @@
 import "./globals.css";
 import { fira_sans } from "./ui/fonts";
-
+import SessionWrapper from "./ui/components/SessionWrapper";
+import Navbar from "./ui/components/Navbar";
+import Footer from "./ui/components/Footer";
 export const metadata = {
   title: {
     template: "%s | aether",
@@ -15,7 +17,14 @@ export default function RootLayout({ children }) {
       <body
         className={`${fira_sans.className} antialiased`}
       >
-        {children}
+        {/* <SessionWrapper> */}
+          <Navbar />
+          <div className="min-h-screen   bg-[size:20px_20px]"
+            style={{ paddingTop: "var(--navbar-height)" }}>
+            {children}
+          </div>
+          <Footer />
+        {/* </SessionWrapper> */}
       </body>
     </html>
   );
