@@ -11,10 +11,10 @@ export default function Home() {
             Share desktop resources seamlessly across devices with enterprise-grade security
           </p>
           <div className="flex justify-center gap-4">
-            <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center">
+            <button className="px-6 py-4  bg-cyan-500 border border-gray-400 rounded-lg hover:bg-cyan-700 hover:text-white flex items-center">
               Get Started <ArrowRight className="ml-2 h-4 w-4" />
             </button>
-            <button  className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+            <button  className="px-6 py-4 border bg-teal-500 border-gray-400 rounded-lg hover:bg-teal-700 hover:text-white">
             <Link href={"/about"}>Learn More</Link> 
             </button>
           </div>
@@ -31,7 +31,7 @@ export default function Home() {
                 alt="First Step"
                 className="w-full rounded-lg shadow-lg"
               />
-              <div className="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
+              <div className="absolute -top-4 -left-4 w-12 h-12  bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
                 1
               </div>
             </div>
