@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
       <body className={`${fira_sans.className} antialiased`}>
         <SessionWrapper>
           <Navbar />
-          <main className="min-h-screen bg-[size:20px_20px]">
+          <main className=" min-h-screen bg-[size:20px_20px]">
             <PageWrapper>
               {children}
             </PageWrapper>
