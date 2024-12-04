@@ -8,7 +8,7 @@ import "@/app/globals.css"
 
 const Login = () => {
   const router = useRouter()
-  const { data: session } = useSession()
+  const { data: session,status } = useSession()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -21,7 +21,7 @@ const Login = () => {
   }, [])
   // Redirect if already authenticated
   useEffect(() => {
-    if (session) {
+    if (status === 'authenticated') {
       router.push('/dashboard')
       console.log("There is session")
       console.log("session", session.user?.email)
@@ -29,8 +29,11 @@ const Login = () => {
   }, [session, router])
 
   // Early return if session exists
-  if (session) {
+  if (status === 'authenticated') {
     return null
+  }
+  if (status === 'loading') {
+    return <div>Loading...</div>
   }
 
   const handleChange = (e) => {

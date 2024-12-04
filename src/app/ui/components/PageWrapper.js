@@ -1,13 +1,12 @@
 "use client"
 import { usePathname } from 'next/navigation'
 import React from 'react'
-import { useEffect, useState } from 'react'
 
 const PageWrapper = ({children}) => {
  const pathname = usePathname()
   const isLandingPage = pathname === '/'
   return (
-    <div className={`${isLandingPage ? '' : 'pt-[13.90vh] md:pt-[9vh] lg:pt-[8.75vh] px-4 md:px-6 lg:px-8'}`}>
+    <div className={`${isLandingPage ? '' : 'sm:pt-[11.90vh] md:pt-[9vh] lg:pt-[8.75vh] px-4 md:px-6 lg:px-8'}`}>
       {children}
     </div>
   )

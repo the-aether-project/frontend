@@ -1,13 +1,13 @@
 'use client'
 import { useState,useEffect } from 'react'
-import { signIn } from 'next-auth/react'
+import { signIn,useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
 import "@/app/globals.css"
 
 const Signup = () => {
-
+const { data: session,status } = useSession()
 useEffect(() => {
   document.title = 'SignUp • Aether'
 }, [])
@@ -36,7 +36,21 @@ useEffect(() => {
       setErrors(prev => ({ ...prev, [name]: '' }))
     }
   }
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push('/dashboard')
+      console.log("There is session")
+      console.log("session", session.user?.email)
+    }
+  }, [session, router])
 
+  // Early return if session exists
+  if (status === 'authenticated') {
+    return null
+  }
+  if (status === 'loading') {
+    return <div>Loading...</div>
+  }
   const validateForm = () => {
     const newErrors = {}
     
