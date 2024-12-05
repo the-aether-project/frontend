@@ -55,39 +55,39 @@ const Navbar = () => {
         {session ? (
           <div className='flex flex-col md:flex-row gap-8 ml-0 md:ml-[24vw] mr-0 pr-8'>
             <button
-              className={`font-medium text-xl px-4 py-2 ${pathname === '/home' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
+              className={`font-medium text-xl px-4  py-2 ${pathname === '/home' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
               onClick={() => { router.push('/home'); setIsMenuOpen(false); }}
             >
               Home
             </button>
             <button
-              className={`font-medium text-xl px-4 py-2 ${pathname === '/mode' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
+              className={`font-medium text-xl px-4   py-2 ${pathname === '/mode' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
               onClick={() => { router.push('/mode'); handleModeChange(); setIsMenuOpen(false); }}
             >
               Lend/Rent
             </button>
             <button
-              className={`font-medium text-xl px-4 py-2 ${pathname === '/dashboard' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
+              className={`font-medium text-xl px-4  py-2 ${pathname === '/dashboard' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
               onClick={() => { router.push('/dashboard'); setIsMenuOpen(false); }}
             >
               Dashboard
             </button>
             <button
-              className={`font-medium text-xl px-4 py-2 ${pathname === '/profile' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
+              className={`font-medium text-xl px-4  py-2 ${pathname === '/profile' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
               onClick={() => { router.push(`/${session?.user?.name}`); setIsMenuOpen(false); }}
             >
               Profile
             </button>
             <button
-              className={`font-medium text-xl px-4 py-2 ${pathname === '/settings' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
+              className={`font-medium text-xl px-4  py-2 ${pathname === '/settings' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
               onClick={() => { router.push('/settings'); setIsMenuOpen(false); }}
             >
               Settings
             </button>
-            <div className={`font-medium text-xl px-6 py-3 ${mode === 'lend' ? 'text-green-500' : mode === 'rent' ? 'text-blue-500' : ''} rounded-2xl border-2 border-yellow-300`}>
+            <div className={`font-medium text-xl px-4  py-3 ${mode === 'lend' ? 'text-green-500' : mode === 'rent' ? 'text-blue-500' : ''} rounded-2xl border-2 border-yellow-300`}>
               Timer
             </div>
-            <div className="font-medium text-xl px-4 py-3">
+            <div className="font-medium text-xl px-4  py-3">
               NightMode
             </div>
             <div className="Logout py-1">
