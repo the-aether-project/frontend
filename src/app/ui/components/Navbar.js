@@ -53,7 +53,7 @@ const Navbar = () => {
 
       <div className={`flex-col md:flex-row md:flex ${isMenuOpen ? 'flex' : 'hidden'} md:items-center w-full md:w-auto`}>
         {session ? (
-          <div className='flex flex-col md:flex-row gap-6 ml-0 md:ml-[24vw] mr-0 pr-8'>
+          <div className='flex flex-col md:flex-row gap-8 ml-0 md:ml-[24vw] mr-0 pr-8'>
             <button
               className={`font-medium text-xl px-4 py-2 ${pathname === '/home' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
               onClick={() => { router.push('/home'); setIsMenuOpen(false); }}
@@ -116,4 +116,3 @@ const Navbar = () => {
 }
 
 export default Navbar;
-

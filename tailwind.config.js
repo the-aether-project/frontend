@@ -19,6 +19,13 @@ module.exports = {
       boxShadow: {
         '3xl': '0 35px 70px -15px rgba(0, 0, 0, 0.25)', // Customize the shadow values
       },
+      screens: {
+        
+        '1200': '1200px',
+        '1300': '1340px',
+        '1400': '1400px',
+      
+      }
     },
   },
   plugins: [],
