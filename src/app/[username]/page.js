@@ -1,10 +1,11 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,use } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { FaUserCircle, FaEdit, FaCamera, FaSave, FaTimes } from 'react-icons/fa';
 
-const Profile = ({ params }) => {
+const Profile = ({ params: paramsPromise }) => {
+    const params = use(paramsPromise);
     const { data: session, status } = useSession();
     const router = useRouter();
     const [username, setUsername] = useState('');
@@ -20,7 +21,15 @@ const Profile = ({ params }) => {
     const [balance, setBalance] = useState(100); // Static balance
     const [editChanges, setEditChanges] = useState(false);
     const [errors, setErrors] = useState({});
-
+    const [editEligible, setEditEligible] = useState(false);
+    useEffect(() => {
+        if (session && params.username == session.user.name) {
+            setEditEligible(true);
+        }
+        else {
+            setEditEligible(false);
+        }
+    }, [session, params.username, router]);
     useEffect(() => {
         if (status === 'loading') {
             return; // Do nothing while loading
@@ -30,9 +39,7 @@ const Profile = ({ params }) => {
         }
 
     }, [session, status, router]);
-    if (!session) {
-        router.push('/login');
-    }
+   
 
     useEffect(() => {
         if (session) {
@@ -98,34 +105,35 @@ const Profile = ({ params }) => {
                     <img src="https://m.media-amazon.com/images/I/81bc8mA3nKL._AC_UF1000,1000_QL80_.jpg" alt="" />
                 </div>
                 {/* profile pic parts start here */}
-                <div className="relative -mt-16 flex justify-center">
-                    <div className="w-32 h-32 rounded-full bg-gray-400 p-0.5 flex items-center justify-center">
-                        <label htmlFor="profile-pic-upload" className="w-full h-full cursor-pointer flex items-center justify-center overflow-hidden ">
-                            {profilePic ? (
-                                <img
-                                    src={profilePic}
-                                    alt="User Avatar"
-                                    className="w-full h-full rounded-full object-cover"
-                                />
-                            ) : (
-                                <FaUserCircle className="w-full h-full text-gray-400" />
-                            )}
-                            {editChanges && (
-                                <div className="absolute bottom-0 right-0 bg-blue-600 rounded-full p-2 shadow-lg">
-                                    <FaCamera className="h-4 w-4 text-white" />
+                                <div className="relative -mt-16 flex justify-center">
+                                    <div className="w-32 h-32 rounded-full bg-gray-400 p-0.5 flex items-center justify-center">
+                                        <label htmlFor="profile-pic-upload" className={`w-full h-full cursor-pointer flex items-center justify-center overflow-hidden ${editChanges ? '' : 'pointer-events-none'}`}>
+                                            {profilePic ? (
+                                                <img
+                                                    src={profilePic}
+                                                    alt="User Avatar"
+                                                    className="w-full h-full rounded-full object-cover"
+                                                />
+                                            ) : (
+                                                <FaUserCircle className="w-full h-full text-gray-400" />
+                                            )}
+                                            {editChanges && (
+                                                <div className="absolute bottom-0 right-0 bg-blue-600 rounded-full p-2 shadow-lg flex ">
+                                                    <FaCamera className="h-4 w-4 text-white" />
+                                                </div>
+                                            )}
+                                        </label>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            id="profile-pic-upload"
+                                            onChange={handleProfilePicChange}
+                                            className="hidden"
+                                            disabled={!editChanges}
+                                        />
+                                    </div>
                                 </div>
-                            )}
-                        </label>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            id="profile-pic-upload"
-                            onChange={handleProfilePicChange}
-                            className="hidden"
-                        />
-                    </div>
-                </div>
-                {/* profile pic parts end here */}
+                                {/* profile pic parts end here */}
                 <h2 className="text-xl my-0.5 text-center font-semibold text-gray-800">{username}</h2>
 
                 <div className="px-6 py-4 flex flex-col">
@@ -153,19 +161,24 @@ const Profile = ({ params }) => {
                         placeholder="Email"
                         disabled={!editChanges}
                     />
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        className={`text-lg text-gray-800 text-center mt-2 rounded-lg
-                            ${editChanges
-                                ? 'border-2 border-gray-200 focus:outline-none focus:border-blue-500'
-                                : 'border-none bg-transparent'}`}
-                        placeholder="Password"
-                        disabled={!editChanges}
-                    />
-                </div>
+                        {/*Here put ForgotPassword Component.*/}
 
+                    {/* {editChanges && (
+                        <div className="mt-2">
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={handlePasswordChange}
+                                className="text-lg text-gray-800 w-full text-center rounded-lg border-2 border-gray-200 focus:outline-none focus:border-blue-500"
+                                placeholder="Password"
+                            />
+                        </div>
+                        
+                    )} */}
+
+
+                </div>
+                    {/* Edit eligible part comes here */}
                 <div className="px-6 py-4">
                     <h2 className="text-xl font-semibold text-gray-800">My Devices</h2>
                     <ul className="mt-2 space-y-2">
@@ -181,26 +194,29 @@ const Profile = ({ params }) => {
                     <h2 className="text-xl font-semibold text-gray-800">Balance</h2>
                     <p className="text-gray-600">${balance}</p>
                 </div>
-                <div className="px-6 py-4 flex justify-center ">
+                
+             
                     {!editChanges ? (
+                       < div className="flex justify-center mb-4">
                         <button
                             onClick={handleEditChanges}
-                            className="bg-blue-600 text-white text-xl px-4 py-4 rounded-lg focus:outline-none flex items-center justify-center ">
+                            className="bg-blue-600 text-white  text-xl px-4 py-4 rounded-lg focus:outline-none flex items-center justify-center ">
                             <FaEdit className='mx-2'/>
                             Edit Profile
                         </button>
+                        </div>
                     ) : (
-                        <div className='flex justify-around'>
+                        <div className='flex justify-around mb-4'>
                             <button
                                 onClick={handleSaveChanges}
-                                className="bg-blue-600 text-white text-xl px-4 py-4 rounded-lg focus:outline-none flex items-center justify-center">
+                                className="bg-blue-600 text-white  text-xl px-4 py-2 rounded-lg focus:outline-none flex items-center justify-center">
                                 <FaSave className='mx-2' />
                                 Save Changes
                             </button>
 
                             <button
                                 onClick={handleCancelChanges}
-                                className="bg-blue-600 text-white text-xl px-4 py-4 rounded-lg focus:outline-none flex items-center justify-center">
+                                className="bg-blue-600 text-white text-xl px-4 py-4 rounded-lg focus:outline-none flex items-center justify-center ">
                                 <FaTimes className='mx-2' />
                                 Cancel
                             </button>
@@ -208,7 +224,7 @@ const Profile = ({ params }) => {
                     )
                     }
 
-                </div>
+              
             </div>
         </div>
     );
