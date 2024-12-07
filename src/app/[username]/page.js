@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle, FaEdit, FaCamera, FaSave, FaTimes } from 'react-icons/fa';
 
-const Profile = () => {
+const Profile = ({ params }) => {
     const { data: session, status } = useSession();
     const router = useRouter();
     const [username, setUsername] = useState('');
@@ -19,6 +19,8 @@ const Profile = () => {
     const [deviceImage, setDeviceImage] = useState('');
     const [balance, setBalance] = useState(100); // Static balance
     const [editChanges, setEditChanges] = useState(false);
+    const [errors, setErrors] = useState({});
+
     useEffect(() => {
         if (status === 'loading') {
             return; // Do nothing while loading
@@ -26,18 +28,21 @@ const Profile = () => {
         if (!session) {
             router.push('/login'); // Redirect to login if not authenticated
         }
-       
+
     }, [session, status, router]);
+    if (!session) {
+        router.push('/login');
+    }
 
     useEffect(() => {
         if (session) {
             setUsername(session?.user?.name || '');
             setEmail(session?.user?.email || '');
             setProfilePic(session.user.image || '');
-            
-           
+
+
         }
-        console.log("url : ",session?.user?.image)
+        console.log("url : ", session?.user?.image)
     }, [session]);
 
     const handleProfilePicChange = (e) => {
@@ -70,6 +75,15 @@ const Profile = () => {
     const handleEditChanges = () => {
         setEditChanges(!editChanges);
     };
+    const handleCancelChanges = () => {
+        setEditChanges(false);
+        setUsername(session?.user?.name || '');
+        setEmail(session?.user?.email || '');
+        setPassword('');
+        setConfirmPassword('');
+        setProfilePic(session?.user?.image || '');
+        setErrors({});
+    };
 
     if (status === 'loading') {
         return <div>Loading...</div>;
@@ -78,15 +92,15 @@ const Profile = () => {
     return (
         <div className="min-h-screen border-2 border-red-200 py-2">
             <div className="w-full bg-white shadow-lg rounded-lg overflow-hidden ">
-              
+
                 <div className=" h-[40vh] overflow-hidden bg-slate-400 flex justify-center">
-                 {/* img of the laptop which user has kept in their active device */}
+                    {/* img of the laptop which user has kept in their active device */}
                     <img src="https://m.media-amazon.com/images/I/81bc8mA3nKL._AC_UF1000,1000_QL80_.jpg" alt="" />
                 </div>
                 {/* profile pic parts start here */}
-                 <div className="relative -mt-16 flex justify-center">
+                <div className="relative -mt-16 flex justify-center">
                     <div className="w-32 h-32 rounded-full bg-gray-400 p-0.5 flex items-center justify-center">
-                        <label htmlFor="profile-pic-upload" className="w-full h-full cursor-pointer flex items-center justify-center ">
+                        <label htmlFor="profile-pic-upload" className="w-full h-full cursor-pointer flex items-center justify-center overflow-hidden ">
                             {profilePic ? (
                                 <img
                                     src={profilePic}
@@ -95,6 +109,11 @@ const Profile = () => {
                                 />
                             ) : (
                                 <FaUserCircle className="w-full h-full text-gray-400" />
+                            )}
+                            {editChanges && (
+                                <div className="absolute bottom-0 right-0 bg-blue-600 rounded-full p-2 shadow-lg">
+                                    <FaCamera className="h-4 w-4 text-white" />
+                                </div>
                             )}
                         </label>
                         <input
@@ -108,31 +127,45 @@ const Profile = () => {
                 </div>
                 {/* profile pic parts end here */}
                 <h2 className="text-xl my-0.5 text-center font-semibold text-gray-800">{username}</h2>
-                <div className="text-center px-6 py-4 flex flex-col">
-                <h2 className="text-xl font-semibold text-gray-800">User Information</h2>
-                    
+
+                <div className="px-6 py-4 flex flex-col">
+                    <h2 className="text-xl font-semibold text-gray-800">User Information</h2>
+
                     <input
                         type="text"
                         value={username}
                         onChange={handleUsernameChange}
-                        className="text-2xl font-semibold text-gray-800 text-center bg-white border-2 rounded-lg border-gray-200  focus:outline-none"
+                        className={`text-2xl font-semibold text-gray-800 text-center bg-white rounded-lg mt-2
+                            ${editChanges
+                                ? 'border-2 border-gray-200 focus:outline-none focus:border-blue-500'
+                                : 'border-none bg-transparent'}`}
                         placeholder="Username"
+                        disabled={!editChanges}
                     />
                     <input
                         type="email"
                         value={email}
                         onChange={handleEmailChange}
-                        className="text-lg text-gray-800 text-center bg-transparent border-none focus:outline-none mt-2"
+                        className={`text-lg text-gray-800 text-center mt-2 rounded-lg
+                            ${editChanges
+                                ? 'border-2 border-gray-200 focus:outline-none focus:border-blue-500'
+                                : 'border-none bg-transparent'}`}
                         placeholder="Email"
+                        disabled={!editChanges}
                     />
                     <input
                         type="password"
                         value={password}
                         onChange={handlePasswordChange}
-                        className="text-lg text-gray-800 text-center bg-transparent border-none focus:outline-none mt-2"
+                        className={`text-lg text-gray-800 text-center mt-2 rounded-lg
+                            ${editChanges
+                                ? 'border-2 border-gray-200 focus:outline-none focus:border-blue-500'
+                                : 'border-none bg-transparent'}`}
                         placeholder="Password"
+                        disabled={!editChanges}
                     />
                 </div>
+
                 <div className="px-6 py-4">
                     <h2 className="text-xl font-semibold text-gray-800">My Devices</h2>
                     <ul className="mt-2 space-y-2">
@@ -148,20 +181,33 @@ const Profile = () => {
                     <h2 className="text-xl font-semibold text-gray-800">Balance</h2>
                     <p className="text-gray-600">${balance}</p>
                 </div>
-                <div className="px-6 py-4 flex justify-around">
-                  
-                    <button
-                        onClick={handleEditChanges}
-                        className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                    >
-                        Edit Changes
-                    </button>
-                    <button
-                        onClick={handleSaveChanges}
-                        className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                    >
-                        Save Changes
-                    </button>
+                <div className="px-6 py-4 flex justify-center ">
+                    {!editChanges ? (
+                        <button
+                            onClick={handleEditChanges}
+                            className="bg-blue-600 text-white text-xl px-4 py-4 rounded-lg focus:outline-none flex items-center justify-center ">
+                            <FaEdit className='mx-2'/>
+                            Edit Profile
+                        </button>
+                    ) : (
+                        <div className='flex justify-around'>
+                            <button
+                                onClick={handleSaveChanges}
+                                className="bg-blue-600 text-white text-xl px-4 py-4 rounded-lg focus:outline-none flex items-center justify-center">
+                                <FaSave className='mx-2' />
+                                Save Changes
+                            </button>
+
+                            <button
+                                onClick={handleCancelChanges}
+                                className="bg-blue-600 text-white text-xl px-4 py-4 rounded-lg focus:outline-none flex items-center justify-center">
+                                <FaTimes className='mx-2' />
+                                Cancel
+                            </button>
+                        </div>
+                    )
+                    }
+
                 </div>
             </div>
         </div>
