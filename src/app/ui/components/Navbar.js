@@ -12,11 +12,9 @@ const Navbar = () => {
   const pathname = usePathname();
   const isHomePage = pathname === '/';
   const router = useRouter();
-  const [mode, setMode] = useState();
+  
 
-  const handleModeChange = () => {
-    setMode((prevMode) => (prevMode === 'lend' ? 'rent' : 'lend'));
-  };
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,7 +66,7 @@ const Navbar = () => {
             </button>
             <button
               className={`font-medium text-xl px-4   py-2 ${pathname === '/mode' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
-              onClick={() => { router.push('/mode'); handleModeChange(); setIsMenuOpen(false); }}
+              onClick={() => { router.push('/mode'); setIsMenuOpen(false); }}
             >
               Lend/Rent
             </button>
@@ -92,7 +90,7 @@ const Navbar = () => {
             >
               Settings
             </button>
-            <div className={`font-medium text-xl px-4  py-3 ${mode === 'lend' ? 'text-green-500' : mode === 'rent' ? 'text-blue-500' : ''} rounded-2xl border-2 border-yellow-300`}>
+            <div className={`font-medium text-xl px-4  py-3  rounded-2xl border-2 border-yellow-300`}>
               Timer
             </div>
             <div className="font-medium text-xl px-4  py-3">
