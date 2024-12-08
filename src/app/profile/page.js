@@ -21,7 +21,7 @@ const Profile = () => {
     const [editChanges, setEditChanges] = useState(false);
     const [errors, setErrors] = useState({});
     const [isLandlord, setIsLandlord] = useState(true);
-
+    const [tempIsLandlord, setTempIsLandlord] = useState(true);
 
     useEffect(() => {
         if (status === 'loading') {
@@ -39,7 +39,7 @@ const Profile = () => {
             setUsername(session?.user?.name || '');
             setEmail(session?.user?.email || '');
             setProfilePic(session?.user?.image || '');
-
+            setTempIsLandlord(isLandlord);
 
         }
         console.log("url : ", session?.user?.image)
@@ -72,12 +72,13 @@ const Profile = () => {
         // Save the updated username, email, password, and profile picture to the server
         console.log('Changes saved:', { username, email, profilePic });
         setEditChanges(false)
+        setIsLandlord(tempIsLandlord);
     };
     const handleEditChanges = () => {
         setEditChanges(!editChanges);
     };
     const handleModeChange = (e) => {
-        setIsLandlord(e.target.value === 'landlord');
+        setTempIsLandlord(e.target.value === 'landlord');
     };
     const handleCancelChanges = () => {
         setEditChanges(false);
@@ -86,6 +87,7 @@ const Profile = () => {
         // setPassword('');
         // setConfirmPassword('');
         setProfilePic(session?.user?.image || '');
+        setTempIsLandlord(isLandlord);
         setErrors({});
     };
 
@@ -143,12 +145,13 @@ const Profile = () => {
             <h2 className="text-xl my-0.5 text-center font-semibold text-gray-800">{session?.user?.name || ''}</h2>
             {/* Main Content */}
             <div className="grid md:grid-cols-3 gap-6 mx-8 my-4">
-                {/* User Info Card */}
+                
                 <div className="bg-white rounded-xl shadow-lg p-6 border-2 ">
-                    <div className="flex justify-between items-center mb-6">
+                    <div className="flex  items-center mb-6 gap-2">
+                        <FaUserCircle className="text-gray-00 text-xl " />
                         <h2 className="text-xl font-semibold">User Information</h2>
-
                     </div>
+                    
                     <div className="space-y-4">
                         <div>
                             <label className="block text-lg font-medium text-gray-600 mb-1">Username:</label>
@@ -184,7 +187,7 @@ const Profile = () => {
                                         <input
                                             type="radio"
                                             value="landlord"
-                                            checked={isLandlord}
+                                            checked={tempIsLandlord}
                                             onChange={handleModeChange}
                                             className="form-radio text-blue-600"
                                         />
@@ -194,7 +197,7 @@ const Profile = () => {
                                         <input
                                             type="radio"
                                             value="tenant"
-                                            checked={!isLandlord}
+                                            checked={!tempIsLandlord}
                                             onChange={handleModeChange}
                                             className="form-radio text-blue-600"
                                         />
@@ -210,7 +213,7 @@ const Profile = () => {
                     </div>
                 </div>
 
-                {/* Devices Card */}
+               
                 <div className="bg-white rounded-xl shadow-lg p-6 border-2 ">
                     <div className="flex items-center gap-2 mb-6">
                         <FaDesktop className="text-gray-00" />
@@ -223,10 +226,14 @@ const Profile = () => {
                                 <p className="text-lg text-gray-600 mt-1">{device.specs}</p>
                             </div>
                         ))}
+                        {!isLandlord && (
+                            <div className="bg-gray-100 rounded-lg p-4 hover:bg-gray-100 transition-colors text-lg">
+                                <h3 className="font-medium text-gray-900">Rented Device</h3>
+                                <p className="text-lg text-gray-600 mt-1">CPU: 6 cores, RAM: 24GB, GPU: NVIDIA RTX 2060</p>
+                            </div>
+                        )}
                     </div>
                 </div>
-
-                {/* Balance Card */}
                 <div className="bg-white rounded-xl shadow-lg p-6 border-2 ">
                     <div className="flex items-center gap-2 mb-6 justify-center md:justify-start ">
                         <FaWallet className="text-gray-600" />
@@ -252,7 +259,12 @@ const Profile = () => {
                     </div>
                   
                        
-
+                    {!isLandlord && !editChanges && (
+                        <div className="bg-gray-100 rounded-lg p-4 hover:bg-gray-100 transition-colors text-lg">
+                            <h3 className="font-medium text-gray-900">Rented Device</h3>
+                            <p className="text-lg text-gray-600 mt-1">CPU: 6 cores, RAM: 24GB, GPU: NVIDIA RTX 2060</p>
+                        </div>
+                    )}
                    
                 </div>
             </div>
