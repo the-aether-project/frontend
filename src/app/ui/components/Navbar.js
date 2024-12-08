@@ -79,7 +79,7 @@ const Navbar = () => {
                   : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'
                 } transition-all duration-200`}
               onClick={() => {
-                router.push(`/${session?.user?.name}`);
+                router.push('/profile');
                 setIsMenuOpen(false);
               }}
             >
