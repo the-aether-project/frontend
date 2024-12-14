@@ -220,18 +220,24 @@ const Profile = () => {
                         <h2 className="text-xl font-semibold">My Devices</h2>
                     </div>
                     <div className="space-y-4">
+                    {!isLandlord && (
+                            <div className="bg-gray-100 border-4 border-green-300 rounded-lg p-4 hover:bg-gray-100 transition-colors text-lg">
+                                <h3 className="font-medium text-gray-900">Rented Device</h3>
+                                <p className="text-lg text-gray-600 mt-1">CPU: 6 cores, RAM: 24GB, GPU: NVIDIA RTX 2060</p>
+                            </div>
+                        )}
                         {devices.map((device, index) => (
                             <div key={index} className="bg-gray-100 rounded-lg p-4 hover:bg-gray-100 transition-colors text-lg">
                                 <h3 className="font-medium text-gray-900">{device.name}</h3>
                                 <p className="text-lg text-gray-600 mt-1">{device.specs}</p>
                             </div>
                         ))}
-                        {!isLandlord && (
+                        {/* {!isLandlord && (
                             <div className="bg-gray-100 rounded-lg p-4 hover:bg-gray-100 transition-colors text-lg">
                                 <h3 className="font-medium text-gray-900">Rented Device</h3>
                                 <p className="text-lg text-gray-600 mt-1">CPU: 6 cores, RAM: 24GB, GPU: NVIDIA RTX 2060</p>
                             </div>
-                        )}
+                        )} */}
                     </div>
                 </div>
                 <div className="bg-white rounded-xl shadow-lg p-6 border-2 ">
