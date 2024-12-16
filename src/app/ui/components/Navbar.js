@@ -72,7 +72,7 @@ const Navbar = () => {
             </button>
 
             <button
-              className={`font-medium text-xl px-4 py-2 ${pathname === `/${session?.user?.name}`
+              className={`font-medium text-xl px-4 py-2 ${pathname === `/profile`
                   ? 'border-b-2 border-white'
                   : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'
                 } transition-all duration-200`}

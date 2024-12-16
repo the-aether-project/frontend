@@ -1,20 +1,19 @@
 'use client'
-import { useState,useEffect } from 'react'
-import { signIn,useSession } from 'next-auth/react'
+import { useState, useEffect } from 'react'
+import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
 import "@/app/globals.css"
 
 const Signup = () => {
-const { data: session,status } = useSession()
-useEffect(() => {
-  document.title = 'SignUp • Aether'
-}, [])
+  const { data: session, status } = useSession()
+  useEffect(() => {
+    document.title = 'SignUp • Aether'
+  }, [])
   const router = useRouter()
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    username: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -53,13 +52,11 @@ useEffect(() => {
   }
   const validateForm = () => {
     const newErrors = {}
-    
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required'
-    }
-    
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required'
+
+
+
+    if (!formData.username.trim()) {
+      newErrors.username = 'Username is required'
     }
 
     if (!formData.email) {
@@ -70,8 +67,8 @@ useEffect(() => {
 
     if (!formData.password) {
       newErrors.password = 'Password is required'
-    } else if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters'
+    } else if (formData.password.length < 8 || formData.password.length > 50) {
+      newErrors.password = 'Password must be between 8 and 50 characters'
     }
 
     if (!formData.confirmPassword) {
@@ -86,7 +83,7 @@ useEffect(() => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const formErrors = validateForm()
-    
+
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors)
       return
@@ -120,39 +117,24 @@ useEffect(() => {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4 mb-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    placeholder="First name"
-                    className={`w-full px-3 py-2 border ${
-                      errors.firstName ? 'border-red-500' : 'border-gray-300'
-                    } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
-                  />
-                  {errors.firstName && (
-                    <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>
-                  )}
-                </div>
 
-                <div>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    placeholder="Last name"
-                    className={`w-full px-3 py-2 border ${
-                      errors.lastName ? 'border-red-500' : 'border-gray-300'
+              <div>
+                <input
+                  type="text"
+                  name="username"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  placeholder="Username"
+                  className={`w-full px-3 py-2 border ${errors.username ? 'border-red-500' : 'border-gray-300'
                     } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
-                  />
-                  {errors.lastName && (
-                    <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>
-                  )}
-                </div>
+                />
+                {errors.username && (
+                  <p className="mt-1 text-sm text-red-600">{errors.username}</p>
+                )}
               </div>
+
+
+
 
               <div>
                 <input
@@ -161,9 +143,8 @@ useEffect(() => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email"
-                  className={`w-full px-3 py-2 border ${
-                    errors.email ? 'border-red-500' : 'border-gray-300'
-                  } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
+                  className={`w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
                 />
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-600">{errors.email}</p>
@@ -178,9 +159,8 @@ useEffect(() => {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Password (8+ characters)"
-                    className={`w-full px-3 py-2 border ${
-                      errors.password ? 'border-red-500' : 'border-gray-300'
-                    } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
+                    className={`w-full px-3 py-2 border ${errors.password ? 'border-red-500' : 'border-gray-300'
+                      } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
                   />
                   <button
                     type="button"
@@ -207,9 +187,8 @@ useEffect(() => {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     placeholder="Confirm password"
-                    className={`w-full px-3 py-2 border ${
-                      errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
-                    } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
+                    className={`w-full px-3 py-2 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+                      } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
                   />
                   <button
                     type="button"
@@ -237,7 +216,7 @@ useEffect(() => {
               </button>
             </form>
 
-           
+
 
             <div className="relative mb-0 mt-2">
               <div className="absolute inset-0 flex items-center">
@@ -281,15 +260,15 @@ useEffect(() => {
               </button>
             </div>
 
-            
+
           </div>
         </div>
         <p className="text-center mt-8 text-lg">
-              Already on Aether?{' '}
-              <Link href="/login" className="text-blue-600 font-medium hover:underline">
-                Sign in
-              </Link>
-            </p>
+          Already on Aether?{' '}
+          <Link href="/login" className="text-blue-600 font-medium hover:underline">
+            Sign in
+          </Link>
+        </p>
       </div>
     </div>
   )
