@@ -4,14 +4,25 @@ import { useSession } from 'next-auth/react';
 import Card from '../ui/components/Card';
 import { Clock, MapPin } from 'lucide-react';
 import { FaMicrochip } from "react-icons/fa6";
-
+import { useRouter } from 'next/navigation';
 
 const DashboardPage = () => {
     const { data: session, status } = useSession();
-
+    const router=useRouter()
     const [clickedMoreInfo, setClickedMoreInfo] = useState(false);
     const [selectionMethod, setSelectionMethod] = useState("Lowest Rate");
     const [selectedInfo, setSelectedInfo] = useState(null);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        if (status === 'loading') {
+            return; // Do nothing while loading
+        }
+        if (!session) {
+            router.push('/login'); // Redirect to login if not authenticated
+        } else {
+            setLoading(false); // Set loading to false if authenticated
+        }
+    }, [session, status, router]);
 
 
     useEffect(() => {
@@ -125,7 +136,7 @@ const DashboardPage = () => {
             {systemInfo.length <= 0 && <p className='italic text-gray-500 w-full bg-tertiary bg-opacity-30 text-center mt-5 p-2 shadow-sm'>No Device is online right now. <b>Please come back later!</b></p>}
 
 
-            <div className='p-10'>
+            <div className='p-5'>
                 <div className='flex justify-between'>
                     <h1 className='font-medium text-medium  text-primary border-b-[8px]  inline-block border-tertiary mb-5 '>Selected Device</h1>
                     <h1 className='font-medium text-medium  text-primary border-b-[8px]  inline-block mb-5 mr-10'>{selectionMethod}</h1>

@@ -35,7 +35,7 @@ const Navbar = () => {
     md:fixed  sm:sticky top-0 w-full z-50 
     transition-colors duration-300 ${isHomePage && !isScrolled ? 'bg-transparent backdrop-blur-sm' : 'bg-slate-950'} 
     text-white flex flex-col md:flex-row justify-between items-center 
-    pl-4 py-2 md:py-0 h-auto md:h-[8vh] space-y-2 md:space-y-0
+    pl-4 md:pl-0 py-2 md:py-0 h-auto md:h-[8vh] space-y-2 md:space-y-0
   `;
 
   return (
@@ -49,15 +49,10 @@ const Navbar = () => {
         </button>
       </div>
 
-      <div className={`flex-col md:flex-row md:flex ${isMenuOpen ? 'flex' : 'hidden'} md:items-center w-full md:w-auto`}>
+      <div className={`flex-col   md:flex md:flex-row ${isMenuOpen ? 'flex flex-col w-auto' : 'hidden'} md:items-center w-full md:w-auto`}>
         {session ? (
           <div className='flex flex-col md:flex-row gap-8 ml-0 md:ml-[24vw] mr-0 pr-8'>
-            {/* <button
-              className={`font-medium text-xl px-4  py-2 ${pathname === '/home' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
-              onClick={() => { router.push('/home'); setIsMenuOpen(false); }}
-            >
-              Home
-            </button> */}
+           
             <button
               className={`font-medium text-xl px-4  py-2 ${pathname === '/dashboard' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
               onClick={() => { router.push('/dashboard'); setIsMenuOpen(false); }}
@@ -90,13 +85,8 @@ const Navbar = () => {
             >
               Settings
             </button>
-            <div className={`font-medium text-xl px-4  py-3  rounded-2xl border-2 border-yellow-300`}>
-              Timer
-            </div>
-            <div className="font-medium text-xl px-4  py-3">
-              NightMode
-            </div>
-            <div className="Logout py-1">
+           
+            <div className="Logout font-medium text-xl px-4  py-2 ">
               <Logout />
             </div>
           </div>
@@ -109,7 +99,7 @@ const Navbar = () => {
               SignUp
             </button>
             <button
-              className={`font-medium text-xl px-4 py-2 ${pathname === '/login' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
+              className={`font-medium text-xl px-4 py-2  ${pathname === '/login' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
               onClick={() => { router.push('/login'); setIsMenuOpen(false); }}
             >
               Login
