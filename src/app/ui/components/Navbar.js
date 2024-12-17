@@ -1,21 +1,20 @@
+
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { Menu, X } from 'lucide-react'; // Using Lucide icons for standard mobile menu icons
 import Logout from './Logout';
-import Link from 'next/link';
 
 const Navbar = () => {
   const { data: session } = useSession();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isHomePage = pathname === '/';
   const router = useRouter();
-  
+  const isHomePage = pathname === '/';
 
-  
-
+  // Scroll effect for home page
   useEffect(() => {
     const handleScroll = () => {
       const heroHeight = window.innerHeight * 0.7;
@@ -24,91 +23,141 @@ const Navbar = () => {
 
     if (isHomePage) {
       window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
     }
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
   }, [isHomePage]);
 
-  const navbarClasses = `
-    md:fixed  sm:sticky top-0 w-full z-50 
-    transition-colors duration-300 ${isHomePage && !isScrolled ? 'bg-transparent backdrop-blur-sm' : 'bg-slate-950'} 
-    text-white flex flex-col md:flex-row justify-between items-center 
-    pl-4 md:pl-0 py-2 md:py-0 h-auto md:h-[8vh] space-y-2 md:space-y-0
+  // Navigation handler
+  const navigateTo = (path) => {
+    router.push(path);
+    setIsMobileMenuOpen(false);
+  };
+
+  // Determine active link style
+  const getLinkStyle = (path) => `
+    ${pathname === path 
+      ? 'text-blue-500 font-semibold' 
+      : 'text-gray-300 hover:text-white'}
+    block py-2 transition-colors duration-300
   `;
 
+  // Authenticated user navigation items
+  const authNavItems = [
+    { label: 'Dashboard', path: '/dashboard' },
+    { label: 'Lend/Rent', path: '/mode' },
+    { label: 'Profile', path: '/profile' },
+    { label: 'Settings', path: '/settings' }
+  ];
+
+  // Unauthenticated user navigation items
+  const unAuthNavItems = [
+    { label: 'Sign Up', path: '/signup' },
+    { label: 'Login', path: '/login' }
+  ];
+
   return (
-    <nav className={navbarClasses}>
-      <div className="flex justify-between items-center w-full md:w-auto">
-        <button onClick={() => router.push('/')} className='font-extrabold text-xl lg:px-28 sm:px-8 md:px-12  py-2'>Aether</button>
-        <button className="md:hidden text-white px-8 text-3xl"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+    <nav className={`
+      fixed top-0 left-0 right-0 z-50 
+      ${isHomePage && !isScrolled 
+        ? 'bg-transparent' 
+        : 'bg-slate-950 shadow-md'}
+      transition-all duration-300
+    `}>
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+        {/* Logo */}
+        <button 
+          onClick={() => router.push('/')} 
+          className="text-white text-2xl font-bold"
         >
-          ☰
+          Aether
         </button>
-      </div>
 
-      <div className={`flex-col   md:flex md:flex-row ${isMenuOpen ? 'flex flex-col w-auto' : 'hidden'} md:items-center w-full md:w-auto`}>
-        {session ? (
-          <div className='flex flex-col md:flex-row gap-8 ml-0 md:ml-[24vw] mr-0 pr-8'>
-           
+        {/* Desktop Navigation */}
+        <div className="hidden lg:flex space-x-6 items-center">
+          {(session ? authNavItems : unAuthNavItems).map((item) => (
             <button
-              className={`font-medium text-xl px-4  py-2 ${pathname === '/dashboard' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
-              onClick={() => { router.push('/dashboard'); setIsMenuOpen(false); }}
+              key={item.path}
+              onClick={() => navigateTo(item.path)}
+              className={`
+                text-white 
+                ${pathname === item.path 
+                  ? 'border-b-2 border-blue-500' 
+                  : 'hover:border-b-2 hover:border-white'}
+                pb-1 transition-all duration-300
+              `}
             >
-              Dashboard
+              {item.label}
             </button>
-            <button
-              className={`font-medium text-xl px-4   py-2 ${pathname === '/mode' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
-              onClick={() => { router.push('/mode'); setIsMenuOpen(false); }}
-            >
-              Lend/Rent
-            </button>
-
-            <button
-              className={`font-medium text-xl px-4 py-2 ${pathname === `/profile`
-                  ? 'border-b-2 border-white'
-                  : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'
-                } transition-all duration-200`}
-              onClick={() => {
-                router.push('/profile');
-                setIsMenuOpen(false);
-              }}
-            >
-              Profile
-            </button>
-
-            <button
-              className={`font-medium text-xl px-4  py-2 ${pathname === '/settings' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
-              onClick={() => { router.push('/settings'); setIsMenuOpen(false); }}
-            >
-              Settings
-            </button>
-           
-            <div className="Logout font-medium text-xl px-4  py-2 ">
+          ))}
+          
+          {session && (
+            <div className="pb-1 transition-all duration-300">
               <Logout />
             </div>
-          </div>
-        ) : (
-          <div className='flex flex-col md:flex-row gap-8 pr-8'>
-            <button
-              className={`font-medium text-xl px-4 py-2 ${pathname === '/signup' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
-              onClick={() => { router.push('/signup'); setIsMenuOpen(false); }}
-            >
-              SignUp
-            </button>
-            <button
-              className={`font-medium text-xl px-4 py-2  ${pathname === '/login' ? 'border-b-2 border-white' : 'hover:border-b-2 hover:border-white border-b-2 border-transparent'} transition-all duration-200`}
-              onClick={() => { router.push('/login'); setIsMenuOpen(false); }}
-            >
-              Login
-            </button>
-          </div>
-        )}
+          )}
+        </div>
+
+        {/* Mobile Menu Toggle */}
+        <div className="lg:hidden">
+          <button 
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="text-white"
+            aria-label="Open mobile menu"
+          >
+            <Menu size={24} />
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Slide-Out Menu */}
+      <div 
+        className={`
+          fixed top-0 right-0 w-64 h-full 
+          bg-slate-900 shadow-lg 
+          transform transition-transform duration-300 ease-in-out
+          ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+          lg:hidden
+        `}
+      >
+        <div className="p-4 flex justify-between items-center border-b border-slate-700">
+          <h2 className="text-white text-xl font-bold">Menu</h2>
+          <button 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-white"
+            aria-label="Close mobile menu"
+          >
+            <X size={24} />
+          </button>
+        </div>
+
+        <div className="p-4 space-y-4">
+          {(session ? authNavItems : unAuthNavItems).map((item) => (
+            <button
+              key={item.path}
+              onClick={() => navigateTo(item.path)}
+              className={`w-full text-left ${getLinkStyle(item.path)}`}
+            >
+              {item.label}
+            </button>
+          ))}
+
+          {session && (
+            <div className="mt-4">
+              <Logout />
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="fixed inset-0 bg-black bg-opacity-50 lg:hidden z-40"
+        />
+      )}
     </nav>
   );
-}
+};
 
 export default Navbar;
