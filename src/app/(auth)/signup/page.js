@@ -4,6 +4,9 @@ import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
+import { ToastContainer,toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { Bounce } from 'react-toastify'
 import "@/app/globals.css"
 
 const Signup = () => {
@@ -31,6 +34,9 @@ const Signup = () => {
       ...prev,
       [name]: value
     }))
+    if (errors.auth) {
+      setErrors((prev) => ({ ...prev, auth: '' }));
+    }
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }))
     }
@@ -92,7 +98,45 @@ const Signup = () => {
     setIsLoading(true)
     try {
       // Add your signup API call here
-      router.push('/login')
+      const response = await fetch('http://localhost:7878/api/authenticate-user/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password
+        })
+      })
+     
+      if (!response.ok) {
+        const errorData = await response.json()
+        setErrors({ auth: errorData.message || 'Something went wrong. Please try again.' })
+        setIsLoading(false)
+        return
+      }
+      // Assuming the response contains the session data
+      const sessionData = await response.json()
+      console.log("signup status:", sessionData.ok)
+      console.log("signup message:", sessionData.message)
+      
+      toast('Signup Succesful! Please login to continue', {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+
+      setTimeout(() => {
+        router.push('/login')
+      }, 4500)
+      
     } catch (error) {
       setErrors({ auth: 'Something went wrong. Please try again.' })
     } finally {
@@ -102,6 +146,8 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen bg-[#ffffff]">
+      
+            <ToastContainer className="mt-4 lg:mt-10 relative   "/>
       <div className="max-w-[1128px] mx-auto py-20">
         <div className="mt-8 px-4">
           <div className="max-w-[520px] mx-auto bg-[#f7f6f6] rounded-lg p-6 shadow-2xl">

@@ -149,13 +149,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <div 
-          onClick={() => setIsMobileMenuOpen(false)}
-          className="fixed inset-0 bg-black bg-opacity-50 lg:hidden z-40"
-        />
-      )}
+     
     </nav>
   );
 };
