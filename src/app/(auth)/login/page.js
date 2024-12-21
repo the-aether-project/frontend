@@ -1,5 +1,5 @@
 'use client'
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
@@ -8,7 +8,7 @@ import "@/app/globals.css"
 
 const Login = () => {
   const router = useRouter()
-  const { data: session,status } = useSession()
+  const { data: session, status } = useSession()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -16,7 +16,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false)
-  useEffect(() => { 
+  useEffect(() => {
     document.title = "Login • Aether"
   }, [])
   // Redirect if already authenticated
@@ -42,7 +42,12 @@ const Login = () => {
       ...prev,
       [name]: value
     }))
-    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }))
+    if (errors.auth) {
+      setErrors((prev) => ({ ...prev, auth: '' }));
+    }
+    if (errors[name]){
+      setErrors(prev => ({ ...prev, [name]: '' }))
+    }
   }
 
   const validateForm = () => {
@@ -54,17 +59,15 @@ const Login = () => {
     }
     if (!formData.password) {
       newErrors.password = 'Password is required'
-    } else if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters'
     }
     return newErrors
   }
 
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const formErrors = validateForm()
-    
+
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors)
       return
@@ -72,16 +75,35 @@ const Login = () => {
 
     setIsLoading(true)
     try {
-      const result = await signIn('credentials', {
-        redirect: false,
-        email: formData.email,
-        password: formData.password,
-      })
+      // await signIn('credentials', {
+      //   redirect: false,
+      //   email: formData.email,
+      //   password: formData.password,
+      //   callbackUrl: '/dashboard', // Redirect to dashboard after successful login
 
-      if (result?.error) {
-        setErrors({ auth: 'Invalid email or password' })
+      // })
+      const response = await fetch('http://localhost:7878/api/authenticate-user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      })
+      if (!response.ok) {
+        const errorData = await response.json() // Parse error message from server
+        setErrors({
+          auth: errorData.message
+          // || 'Invalid email or password' 
+        })
       } else {
         router.push('/dashboard')
+        const data = await response.json()
+        console.log("token:", data.access_token)
+        console.log("status", data.status)
+        console.log("status", data.message)
       }
     } catch (error) {
       setErrors({ auth: 'Something went wrong. Please try again.' })
@@ -91,7 +113,7 @@ const Login = () => {
   }
 
   const handleOAuthSignIn = (provider) => {
-    signIn(provider, { 
+    signIn(provider, {
       callbackUrl: '/dashboard'
     })
   }
@@ -120,9 +142,8 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email"
-                  className={`w-full px-3 py-2 border ${
-                    errors.email ? 'border-red-500' : 'border-gray-300'
-                  } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
+                  className={`w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
                 />
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-600">{errors.email}</p>
@@ -137,9 +158,8 @@ const Login = () => {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Password"
-                    className={`w-full px-3 py-2 border ${
-                      errors.password ? 'border-red-500' : 'border-gray-300'
-                    } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
+                    className={`w-full px-3 py-2 border ${errors.password ? 'border-red-500' : 'border-gray-300'
+                      } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
                   />
                   <button
                     type="button"
@@ -159,8 +179,8 @@ const Login = () => {
               </div>
 
               <div className="flex justify-end">
-                <Link 
-                  href="/forgot-password" 
+                <Link
+                  href="/forgot-password"
                   className="text-blue-600 font-medium text-sm hover:underline"
                 >
                   Forgot password?
@@ -220,14 +240,14 @@ const Login = () => {
               </button>
             </div>
 
-          
+
           </div>
           <p className="text-center mt-8 text-lg">
-              New to Aether?{' '}
-              <Link href="/signup" className="text-blue-600 font-medium hover:underline">
-                Join now
-              </Link>
-            </p>
+            New to Aether?{' '}
+            <Link href="/signup" className="text-blue-600 font-medium hover:underline">
+              Join now
+            </Link>
+          </p>
         </div>
       </div>
     </div>

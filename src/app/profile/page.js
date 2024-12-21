@@ -279,7 +279,7 @@ const Profile = () => {
             {/* Edit eligible part ends here */}
 
             {!editChanges ? (
-                < div className="flex justify-center mt-10">
+                < div className="flex justify-center mt-10 mb-4">
                     <button
                         onClick={handleEditChanges}
                         className="bg-blue-600 text-white  text-xl px-4 py-4 rounded-lg focus:outline-none flex items-center justify-center ">
