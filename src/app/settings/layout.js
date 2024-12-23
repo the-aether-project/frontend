@@ -40,7 +40,7 @@ const SettingsLayout = ({ children }) => {
         </nav>
       </div>
       
-      <main className="flex-1 p-8 ">
+      <main className="flex-1 p-6 ">
         {children}
       </main>
     </div>
