@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
         <SessionWrapper>
           <Navbar />
           <main className=" min-h-screen bg-[size:20px_20px]">
-            <PageWrapper className="">
+            <PageWrapper >
               {children}
             </PageWrapper>
           </main>

@@ -35,11 +35,11 @@ const Navbar = () => {
 
   // Determine active link style
   const getLinkStyle = (path) => `
-    ${pathname === path 
+    ${pathname.startsWith(path)
       ? 'text-blue-500 font-semibold' 
       : 'text-gray-300 hover:text-white'}
     block py-2 transition-colors duration-300
-  `;
+    `;
 
   // Authenticated user navigation items
   const authNavItems = [
@@ -80,8 +80,8 @@ const Navbar = () => {
               onClick={() => navigateTo(item.path)}
               className={`
                 text-white 
-                ${pathname === item.path 
-                  ? 'border-b-2 border-blue-500' 
+                ${pathname.startsWith(item.path)
+                  ? 'border-b-2 border-teal-500' 
                   : 'hover:border-b-2 hover:border-white'}
                 pb-1 transition-all duration-300
               `}

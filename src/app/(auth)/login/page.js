@@ -75,13 +75,7 @@ const Login = () => {
 
     setIsLoading(true)
     try {
-      // await signIn('credentials', {
-      //   redirect: false,
-      //   email: formData.email,
-      //   password: formData.password,
-      //   callbackUrl: '/dashboard', // Redirect to dashboard after successful login
-
-      // })
+     
       const response = await fetch('http://localhost:7878/api/authenticate-user/login', {
         method: 'POST',
         headers: {
@@ -93,11 +87,11 @@ const Login = () => {
         }),
       })
       if (!response.ok) {
-        const errorData = await response.json() // Parse error message from server
+        const errorResponse = await response.json() // Parse error message from server
         setErrors({
-          auth: errorData.message
-          // || 'Invalid email or password' 
+          auth: errorResponse.message || 'Invalid email or password'
         })
+        return;
       } else {
         router.push('/dashboard')
         const data = await response.json()

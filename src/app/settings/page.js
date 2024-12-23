@@ -1,11 +1,15 @@
-import React from 'react'
+"use client"
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-const page = () => {
-  return (
-    <div>
-      Hello this is settings page
-    </div>
-  )
-}
+const SettingsPage = () => {
+    const router = useRouter();
 
-export default page
+    useEffect(() => {
+        router.push('/settings/security');
+    }, [router]);
+
+    return null;
+};
+
+export default SettingsPage;
