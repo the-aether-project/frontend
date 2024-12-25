@@ -5,6 +5,7 @@ import SessionWrapper from "./ui/components/SessionWrapper";
 import Navbar from "./ui/components/Navbar";
 import Footer from "./ui/components/Footer";
 import PageWrapper from './ui/components/PageWrapper.js'
+import { ThemeProvider } from "./ui/components/DarkMode/ThemeProvider";
 
 export const metadata = {
   title: {
@@ -15,18 +16,27 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+
   return (
     <html lang="en">
       <body className={`${fira_sans.className} antialiased`}>
-        <SessionWrapper>
-          <Navbar />
-          <main className=" min-h-screen bg-[size:20px_20px]">
-            <PageWrapper >
-              {children}
-            </PageWrapper>
-          </main>
-          <Footer />
-        </SessionWrapper>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SessionWrapper>
+            <Navbar />
+            <main className="min-h-screen bg-[size:20px_20px]">
+              <PageWrapper>
+                {children}
+              </PageWrapper>
+            </main>
+            <Footer />
+          </SessionWrapper>
+        </ThemeProvider>
       </body>
     </html>
   );

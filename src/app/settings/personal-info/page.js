@@ -19,7 +19,7 @@ const PersonalInformation = () => {
     const [email, setEmail] = useState("");
     const [isVerified, setIsVerified] = useState(true);
     const [gender, setGender] = useState("");
-    const [isLandlord, setIsLandlord] = useState();
+    const [isLandlord, setIsLandlord] = useState(false);
     const [tempIsLandlord, setTempIsLandlord] = useState(true);
     const [profilePic, setProfilePic] = useState("");
     const [editChanges, setEditChanges] = useState(false);

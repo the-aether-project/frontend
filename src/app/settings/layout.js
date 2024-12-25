@@ -1,9 +1,9 @@
 
 "use client"
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { UserCircle, Shield, Monitor, Wallet } from "lucide-react";
 
 const navItems = [
@@ -15,7 +15,15 @@ const navItems = [
 
 const SettingsLayout = ({ children }) => {
   const pathname = usePathname();
+  const router = useRouter();
   const isActive = (path) => pathname.startsWith(path);
+
+  useEffect(() => {
+    // Redirect to /settings/personal-info if the current path is /settings
+    if (pathname === '/settings') {
+      router.push('/settings/personal-info');
+    }
+  }, [pathname, router]);
 
   const renderNavItem = ({ href, label, icon: Icon }) => (
     <Link
@@ -32,15 +40,15 @@ const SettingsLayout = ({ children }) => {
   );
 
   return (
-    <div className="flex min-h-screen bg-white ">
-      <div className="w-72 bg-gray-50 border-r p-6 ">
-        <h1 className="text-xl font-semibold text-gray-900 mb-6 text-center">Settings</h1>
+    <div className="flex min-h-screen bg-white">
+      <div className="w-72  border-r p-6">
+        <h1 className="text-xl font-semibold text-gray-900 mb-6 pl-6">Settings</h1>
         <nav className="space-y-1">
           {navItems.map(renderNavItem)}
         </nav>
       </div>
       
-      <main className="flex-1 p-6 ">
+      <main className="flex-1 p-6">
         {children}
       </main>
     </div>
