@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -58,15 +57,15 @@ const PersonalInformation = () => {
     if (status === "loading") return <div>Loading...</div>;
 
     return (
-        <div className="min-h-screen rounded-lg overflow-hidden bg-white">
+        <div className="min-h-screen rounded-lg overflow-hidden bg-background text-foreground">
             <h2 className="text-2xl font-semibold text-center mb-6">
                 Personal Information
             </h2>
 
             {/* Profile Photo Section */}
-            <div className="flex items-center justify-between mb-8 space-x-8 rounded-3xl bg-gray-100 px-4 py-2">
+            <div className="flex items-center justify-between mb-8 space-x-8 rounded-3xl bg-muted px-4 py-2">
                 <div className="flex items-center space-x-4">
-                    <div className="w-20 h-20 flex items-center rounded-full bg-gray-100 flex-shrink-0">
+                    <div className="w-20 h-20 flex items-center rounded-full bg-muted flex-shrink-0">
                         {profilePic ? (
                             <img
                                 src={profilePic}
@@ -74,7 +73,7 @@ const PersonalInformation = () => {
                                 className="w-full h-full rounded-full object-cover"
                             />
                         ) : (
-                            <FaUserCircle className="w-full h-full text-gray-400" />
+                            <FaUserCircle className="w-full h-full text-muted-foreground" />
                         )}
                     </div>
                     <span className="font-medium">{username || "Username"}</span>
@@ -95,7 +94,7 @@ const PersonalInformation = () => {
             {/* Information Fields */}
             <div className="space-y-4">
                 <div>
-                    <label className="block text-lg font-medium text-gray-600 mb-1">
+                    <label className="block text-lg font-medium text-muted-foreground mb-1">
                         Username:
                     </label>
                     <input
@@ -104,14 +103,14 @@ const PersonalInformation = () => {
                         onChange={(e) => setUsername(e.target.value)}
                         disabled={!editChanges}
                         className={`w-full rounded-lg ${editChanges
-                            ? "border-2 border-gray-200 focus:border-blue-500 bg-white"
-                            : "border-transparent bg-gray-50"
+                            ? "border-2 border-input focus:border-blue-500 bg-background"
+                            : "border-transparent bg-muted"
                             } px-3 py-2 focus:outline-none transition-colors`}
                     />
                 </div>
 
                 <div>
-                    <label className="block text-lg font-medium text-gray-600 mb-1">
+                    <label className="block text-lg font-medium text-muted-foreground mb-1">
                         Email:
                     </label>
                     <div className="flex items-center gap-2">
@@ -121,19 +120,18 @@ const PersonalInformation = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             disabled={!editChanges}
                             className={`w-full rounded-lg ${editChanges
-                                ? "border-2 border-gray-200 focus:border-blue-500 bg-white"
-                                : "border-transparent bg-gray-50"
+                                ? "border-2 border-input focus:border-blue-500 bg-background"
+                                : "border-transparent bg-muted"
                                 } px-3 py-2 focus:outline-none transition-colors`}
                         />
-
                     </div>
                 </div>
 
                 <div>
-                    <label className="block text-lg font-medium text-gray-600 mb-1">
+                    <label className="block text-lg font-medium text-muted-foreground mb-1">
                         Account Status:
                     </label>
-                    <div className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
+                    <div className="flex items-center gap-2 bg-muted px-3 py-2 rounded-lg">
                         {isVerified ? (
                             <>
                                 <FaCheckCircle className="text-green-500 flex-shrink-0" />
@@ -149,14 +147,14 @@ const PersonalInformation = () => {
                 </div>
 
                 <div>
-                    <label className="block text-lg font-medium text-gray-600 mb-1">
+                    <label className="block text-lg font-medium text-muted-foreground mb-1">
                         Gender:
                     </label>
                     {editChanges ? (
                         <select
                             value={gender}
                             onChange={(e) => setGender(e.target.value)}
-                            className="w-full rounded-lg border-2 border-gray-200 focus:border-blue-500 bg-white px-3 py-2 focus:outline-none"
+                            className="w-full rounded-lg border-2 border-input focus:border-blue-500 bg-background px-3 py-2 focus:outline-none"
                         >
                             <option value="">Select Gender</option>
                             <option value="male">Male</option>
@@ -164,14 +162,14 @@ const PersonalInformation = () => {
                             <option value="other">Other</option>
                         </select>
                     ) : (
-                        <div className="bg-gray-50 px-3 py-2 rounded-lg">
+                        <div className="bg-muted px-3 py-2 rounded-lg">
                             {gender || "Not specified"}
                         </div>
                     )}
                 </div>
                 <div>
-                    <label className="block text-lg font-medium text-gray-600 mb-1">Mode:</label>
-                    <div className={`${editChanges ? 'space-x-4' : 'bg-gray-50 px-3 py-2 rounded-lg'}`}>
+                    <label className="block text-lg font-medium text-muted-foreground mb-1">Mode:</label>
+                    <div className={`${editChanges ? 'space-x-4' : 'bg-muted px-3 py-2 rounded-lg'}`}>
                         {editChanges ? (
                             <>
                                 <label className="inline-flex items-center">
@@ -200,7 +198,6 @@ const PersonalInformation = () => {
                         )}
                     </div>
                 </div>
-
             </div>
 
             {/* Buttons */}

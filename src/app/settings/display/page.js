@@ -10,7 +10,6 @@ const DisplayPage = () => {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Handle hydration
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
@@ -21,67 +20,95 @@ const DisplayPage = () => {
       id: "light", 
       icon: Sun, 
       label: "Light",
-      description: "Clean and bright interface for daytime use"
+      description: "Clean and bright interface for daytime use",
+      ariaLabel: "Switch to light theme"
     },
     { 
       id: "dark", 
       icon: Moon, 
       label: "Dark",
-      description: "Easy on the eyes in low-light conditions"
+      description: "Easy on the eyes in low-light conditions",
+      ariaLabel: "Switch to dark theme"
     },
     { 
       id: "system", 
       icon: Monitor, 
       label: "System",
-      description: "Automatically matches your device settings"
+      description: "Automatically matches your device settings",
+      ariaLabel: "Use system theme preferences"
     },
   ];
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8 p-6">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">Display Settings</h1>
-        <p className="text-muted-foreground">
-          Customize the appearance of your interface.
-        </p>
-      </div>
+    <div className="min-h-screen w-full bg-background">
+      <main className="max-w-4xl  space-y-8 p-4 sm:p-6 md:p-8">
+        <section className="space-y-3">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+            Display Settings
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
+            Customize the appearance of your interface.
+          </p>
+        </section>
 
-      <div className="space-y-4">
-        <div className="grid grid-cols-3 gap-4">
-          {themeOptions.map(({ id, icon: Icon, label, description }) => (
-            <Button
-              key={id}
-              variant={currentTheme === id ? "default" : "outline"}
-              className={`flex-col h-32 space-y-2 relative ${
-                currentTheme === id ? "bg-muted text-muted-foreground" : "bg-primary text-primary-foreground"
-              }`}
-              onClick={() => setTheme(id)}
-            >
-              <Icon className="h-5 w-5" />
-              <span className="font-medium">{label}</span>
-              <span className="text-xs px-2 text-center">
-                {description}
-              </span>
-              {currentTheme === id && (
-                <Check className="h-4 w-4 absolute top-2 right-2" />
-              )}
-            </Button>
-          ))}
-        </div>
-
-        <div className="flex items-center justify-between p-4 rounded-lg bg-muted">
-          <div className="space-y-0.5">
-            <div className="font-medium">Quick Theme Toggle</div>
-            <div className="text-sm text-muted-foreground">
-              Currently: {resolvedTheme === 'dark' ? 'Dark Mode' : 'Light Mode'}
-            </div>
+        <section className="space-y-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {themeOptions.map(({ id, icon: Icon, label, description, ariaLabel }) => (
+              <Button
+                key={id}
+                variant={currentTheme === id ? "default" : "outline"}
+                className={`
+                  relative w-auto py-6 h-full  text-center
+                  flex flex-col items-start justify-start
+                  transition-all duration-200 ease-in-out
+                  hover:scale-[1.02] active:scale-[0.98] 
+                  ${currentTheme === id 
+                    ? "bg-muted text-muted-foreground ring-2 ring-primary" 
+                    : "bg-card hover:bg-accent"
+                  }
+                `}
+                onClick={() => setTheme(id)}
+                aria-label={ariaLabel}
+                aria-pressed={currentTheme === id}
+              >
+                <div className="w-full space-y-4 flex flex-col  ">
+                  <div className="flex items-center justify-between w-full">
+                    <div className="flex items-center gap-3">
+                      <Icon className="h-5 w-5 shrink-0" aria-hidden="true" />
+                      <span className="font-medium text-base">{label}</span>
+                    </div>
+                    {currentTheme === id && (
+                      <Check className="h-4 w-4 shrink-0" aria-hidden="true" />
+                    )}
+                  </div>
+                  
+                  <p className=" h-auto w-auto text-sm  text-center leading-relaxed text-muted-foreground">
+                    {description}
+                  </p>
+                </div>
+              </Button>
+            ))}
           </div>
-          <Switch
-            checked={resolvedTheme === "dark"}
-            onCheckedChange={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-          />
-        </div>
-      </div>
+
+          <div 
+            className="flex flex-col sm:flex-row sm:items-center justify-between p-6 rounded-lg bg-muted gap-4"
+            role="region"
+            aria-label="Quick theme toggle"
+          >
+            <div className="space-y-1">
+              <div className="font-medium">Quick Theme Toggle</div>
+              <div className="text-sm text-muted-foreground">
+                Currently: {resolvedTheme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+              </div>
+            </div>
+            <Switch
+              checked={resolvedTheme === "dark"}
+              onCheckedChange={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+              aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
+            />
+          </div>
+        </section>
+      </main>
     </div>
   );
 };
