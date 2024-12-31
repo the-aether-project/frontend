@@ -113,12 +113,13 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#ffffff]">
-      <div className="max-w-[1128px] mx-auto py-20">
+    <div className="min-h-screen ">
+      <div className="max-w-[1128px] mx-auto py-10">
         <div className="mt-8 px-4">
-          <div className="max-w-[520px] mx-auto bg-[#f7f6f6] rounded-lg p-6 shadow-2xl">
+          {/* the below div contains that inner portion */}
+          <div className="max-w-[520px] mx-auto bg-muted rounded-lg p-6 shadow-2xl">
             <h1 className="text-center text-3xl font-semibold mb-4">Sign in</h1>
-            <p className="text-center text-sm text-gray-600 mb-6">
+            <p className="text-center text-sm text-foreground-muted mb-6">
               Transforming unused resources into limitless possibilities.
             </p>
 
@@ -161,9 +162,9 @@ const Login = () => {
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800"
                   >
                     {showPassword ? (
-                      <FaEyeSlash className="h-5 w-5" />
+                      <FaEyeSlash className="h-5 w-5 text-muted-foreground" />
                     ) : (
-                      <FaEye className="h-5 w-5" />
+                      <FaEye className="h-5 w-5 text-muted-foreground" />
                     )}
                   </button>
                 </div>
@@ -195,7 +196,7 @@ const Login = () => {
                 <div className="w-full border-t border-gray-500"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-[#f7f6f6] text-gray-500">or</span>
+                <span className="px-4 bg-muted text-gray-500">or</span>
               </div>
             </div>
 
@@ -210,7 +211,7 @@ const Login = () => {
               <button
                 type="button"
                 onClick={() => handleOAuthSignIn('google')}
-                className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-full hover:bg-gray-50"
+                className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-full hover:bg-muted-foreground"
               >
                 <img
                   src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -223,7 +224,7 @@ const Login = () => {
               <button
                 type="button"
                 onClick={() => handleOAuthSignIn('github')}
-                className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-full hover:bg-gray-50"
+                className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-full hover:bg-muted-foreground"
               >
                 <img
                   src="https://www.svgrepo.com/show/512317/github-142.svg"

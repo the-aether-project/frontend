@@ -65,7 +65,7 @@ const PersonalInformation = () => {
             {/* Profile Photo Section */}
             <div className="flex items-center justify-between mb-8 space-x-8 rounded-3xl bg-muted px-4 py-2">
                 <div className="flex items-center space-x-4">
-                    <div className="w-20 h-20 flex items-center rounded-full bg-muted flex-shrink-0">
+                    <div className="w-20 h-20 flex items-center rounded-full bg-background flex-shrink-0">
                         {profilePic ? (
                             <img
                                 src={profilePic}
@@ -79,7 +79,7 @@ const PersonalInformation = () => {
                     <span className="font-medium">{username || "Username"}</span>
                 </div>
                 <div className="flex flex-col space-y-2">
-                    <label className="bg-blue-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-700 transition-colors inline-block text-center">
+                    <label className="bg-blue-600 text-white px-2 py-2 rounded-lg cursor-pointer hover:bg-blue-700 transition-colors inline-block text-center">
                         Change Profile Photo
                         <input
                             type="file"

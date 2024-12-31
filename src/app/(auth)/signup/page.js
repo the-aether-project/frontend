@@ -4,7 +4,7 @@ import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
-import { ToastContainer,toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Bounce } from 'react-toastify'
 import "@/app/globals.css"
@@ -58,8 +58,6 @@ const Signup = () => {
   }
   const validateForm = () => {
     const newErrors = {}
-
-
 
     if (!formData.username.trim()) {
       newErrors.username = 'Username is required'
@@ -145,42 +143,37 @@ const Signup = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#ffffff]">
-      
-            <ToastContainer className="mt-4 lg:mt-10 relative   "/>
-      <div className="max-w-[1128px] mx-auto py-20">
+    <div className="min-h-screen bg-background text-foreground">
+      <ToastContainer className="mt-4 lg:mt-9 relative" />
+      <div className="max-w-[1128px] mx-auto py-8">
         <div className="mt-8 px-4">
-          <div className="max-w-[520px] mx-auto bg-[#f7f6f6] rounded-lg p-6 shadow-2xl">
+          <div className="max-w-[520px] mx-auto bg-muted rounded-lg p-6 shadow-2xl">
             <h1 className="text-center text-3xl font-semibold mb-4">Sign Up</h1>
-            <p className="text-center text-sm text-gray-600 mb-6">
+            <p className="text-center text-sm text-foreground-muted mb-6">
               Make the most of your idle resources
             </p>
 
             {errors.auth && (
-              <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-md text-sm">
+              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900 text-red-600 dark:text-red-300 rounded-md text-sm">
                 {errors.auth}
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4 mb-4">
-
               <div>
                 <input
                   type="text"
                   name="username"
-                  value={formData.firstName}
+                  value={formData.username}
                   onChange={handleChange}
                   placeholder="Username"
-                  className={`w-full px-3 py-2 border ${errors.username ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-3 py-2 border ${errors.username ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
                 />
                 {errors.username && (
-                  <p className="mt-1 text-sm text-red-600">{errors.username}</p>
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-300">{errors.username}</p>
                 )}
               </div>
-
-
-
 
               <div>
                 <input
@@ -189,11 +182,11 @@ const Signup = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email"
-                  className={`w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
                 />
                 {errors.email && (
-                  <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-300">{errors.email}</p>
                 )}
               </div>
 
@@ -205,13 +198,13 @@ const Signup = () => {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Password (8+ characters)"
-                    className={`w-full px-3 py-2 border ${errors.password ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-3 py-2 border ${errors.password ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                       } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(prev => ({ ...prev, password: !prev.password }))}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
                   >
                     {showPassword.password ? (
                       <FaEyeSlash className="h-5 w-5" />
@@ -221,7 +214,7 @@ const Signup = () => {
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-sm text-red-600">{errors.password}</p>
+                  <p className="text-sm text-red-600 dark:text-red-300">{errors.password}</p>
                 )}
               </div>
 
@@ -233,13 +226,13 @@ const Signup = () => {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     placeholder="Confirm password"
-                    className={`w-full px-3 py-2 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-3 py-2 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                       } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(prev => ({ ...prev, confirmPassword: !prev.confirmPassword }))}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
                   >
                     {showPassword.confirmPassword ? (
                       <FaEyeSlash className="h-5 w-5" />
@@ -249,7 +242,7 @@ const Signup = () => {
                   </button>
                 </div>
                 {errors.confirmPassword && (
-                  <p className="text-sm text-red-600">{errors.confirmPassword}</p>
+                  <p className="text-sm text-red-600 dark:text-red-300">{errors.confirmPassword}</p>
                 )}
               </div>
 
@@ -262,27 +255,25 @@ const Signup = () => {
               </button>
             </form>
 
-
-
             <div className="relative mb-0 mt-2">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-500"></div>
+                <div className="w-full border-t border-gray-500 dark:border-gray-700"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-[#f7f6f6] text-gray-500">or</span>
+                <span className="px-4 bg-muted text-gray-500 dark:text-gray-300">or</span>
               </div>
             </div>
             <p className='text-xs p-4'>
               By clicking Agree & Join, you agree to Aether's{' '}
-              <a href="" className='text-[#2563eb]'>User Agreement</a>,{' '}
-              <a href="" className='text-[#2563eb]'>Privacy Policy</a>, and{' '}
-              <a href="" className='text-[#2563eb]'>Cookie Policy</a>.
+              <a href="" className='text-blue-600 dark:text-blue-400'>User Agreement</a>,{' '}
+              <a href="" className='text-blue-600 dark:text-blue-400'>Privacy Policy</a>, and{' '}
+              <a href="" className='text-blue-600 dark:text-blue-400'>Cookie Policy</a>.
             </p>
             <div className="space-y-3 mt-4">
               <button
                 type="button"
                 onClick={() => signIn('google', { callbackUrl: '/' })}
-                className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-full hover:bg-gray-50"
+                className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700"
               >
                 <img
                   src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -295,7 +286,7 @@ const Signup = () => {
               <button
                 type="button"
                 onClick={() => signIn('github', { callbackUrl: '/' })}
-                className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-full hover:bg-gray-50"
+                className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700"
               >
                 <img
                   src="https://www.svgrepo.com/show/512317/github-142.svg"
@@ -305,13 +296,11 @@ const Signup = () => {
                 <span className="font-medium">Continue with GitHub</span>
               </button>
             </div>
-
-
           </div>
         </div>
         <p className="text-center mt-8 text-lg">
           Already on Aether?{' '}
-          <Link href="/login" className="text-blue-600 font-medium hover:underline">
+          <Link href="/login" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">
             Sign in
           </Link>
         </p>
@@ -319,6 +308,5 @@ const Signup = () => {
     </div>
   )
 }
-
 
 export default Signup
