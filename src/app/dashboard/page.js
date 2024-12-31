@@ -141,7 +141,7 @@ const DashboardPage = () => {
                 {!clickedMoreInfo && selectedInfo ?
                     <div className='flex flex-col lg:flex-row text-primary gap-5 justify-around'>
                         {/* Rent */}
-                        <div className={`space-y-10 box-border w-full bg-white ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'} p-10 rounded-lg shadow-md`}>
+                        <div className={`space-y-10 box-border w-full  ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'} p-10 rounded-lg shadow-md`}>
                             <div className='gap-1 text-green-700 text-xl'>
                                 <span className='flex'>
                                     <p className='font-bold text-5xl'>{selectedInfo.rent}</p>
@@ -155,7 +155,7 @@ const DashboardPage = () => {
                             <button className='border-2 py-3 px-9 rounded-lg font-medium bg-green-700 text-white hover:scale-[0.99]'>Rent now</button>
                         </div>
 
-                        <div className={`flex flex-col lg:flex-row justify-around gap-5 bg-white ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'} p-10 rounded-lg shadow-md w-full`}>
+                        <div className={`flex flex-col lg:flex-row justify-around gap-5  ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'} p-10 rounded-lg shadow-md w-full`}>
                             {/* Location */}
                             <div className='flex flex-col gap-5 text-medium font-medium p-10 space-y-10 box-border w-fit rounded-lg self-baseline'>
                                 <span className='space-y-5'>
@@ -178,7 +178,7 @@ const DashboardPage = () => {
                         </div>
 
                         {/* Image */}
-                        <div className={`flex flex-col gap-5 text-medium font-medium p-10 space-y-10 w-full box-border bg-white ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'} rounded-lg shadow-md`}>
+                        <div className={`flex flex-col gap-5 text-medium font-medium p-10 space-y-10 w-full box-border  ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'} rounded-lg shadow-md`}>
                             <img
                                 src={"./1st_step.jpeg"}
                                 alt={"img"}

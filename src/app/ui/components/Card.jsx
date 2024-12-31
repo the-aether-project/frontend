@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
 import { FcLinux } from "react-icons/fc";
 import { FaWindows } from "react-icons/fa";
 import { MdComputer } from "react-icons/md";
@@ -14,8 +13,7 @@ function Card({ systemInfo, handleCardClick }) {
                 <div
                     key={index}
                     className={`border rounded-xl shadow-md p-4 w-72 cursor-pointer transition-all duration-300 hover:shadow-lg active:scale-[0.98] group EachCard 
-                        bg-card text-card-foreground border-muted 
-                        ${theme === 'dark' ? 'hover:border-primary' : 'hover:border-blue-200'}`}
+                        ${theme === 'dark' ? 'bg-gray-800 text-white border-gray-700 hover:border-blue-500' : 'bg-white text-black border-gray-200 hover:border-blue-200'}`}
                     onClick={handleCardClick}
                 >
                     <div className="flex items-center justify-between mb-3">
@@ -36,8 +34,7 @@ function Card({ systemInfo, handleCardClick }) {
                                 <div
                                     key={key}
                                     className={`flex justify-between items-center p-2 space-y-2 rounded-md transition-colors
-                                        bg-muted text-muted-foreground 
-                                        group-hover:bg-accent group-hover:text-accent-foreground`}
+                                        ${theme === 'dark' ? 'bg-gray-700 text-gray-300 group-hover:bg-gray-600 group-hover:text-white' : 'bg-gray-50 text-black group-hover:bg-blue-50 group-hover:text-black'}`}
                                 >
                                     <span className="text-xs capitalize">{key}</span>
                                     <span className={`text-xs font-medium text-primary ${key === "version" ? "italic" : ""}`}>

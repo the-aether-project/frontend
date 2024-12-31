@@ -93,7 +93,7 @@ const Profile = () => {
     }
 
     return (
-        <div className="min-h-screen bg-background text-foreground rounded-lg  border-muted overflow-hidden mt-4">
+        <div className=" px-5 min-h-screen bg-background text-foreground rounded-lg  border-muted overflow-hidden mt-4">
             <div className="h-[40vh] overflow-hidden flex justify-center space-x-16 border-b-2 border-muted py-4 bg-muted">
                 <img src="https://m.media-amazon.com/images/I/81bc8mA3nKL._AC_UF1000,1000_QL80_.jpg" alt="" />
             </div>
