@@ -27,7 +27,7 @@ const Profile = () => {
     useEffect(() => {
         if (session) {
             setUsername(session?.username || '');
-            setEmail(session?.user?.email || '');
+            setEmail(session?.email || 'test@gmail.com');
             setProfilePic(session?.user?.image || '');
             setTempIsLandlord(isLandlord);
         }
@@ -49,9 +49,7 @@ const Profile = () => {
         setUsername(e.target.value);
     };
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
+    
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
@@ -74,10 +72,10 @@ const Profile = () => {
 
     const handleCancelChanges = () => {
         setEditChanges(false);
-        setUsername(session?.user?.name || '');
-        setEmail(session?.user?.email || '');
-        setProfilePic(session?.user?.image || '');
-        setTempIsLandlord(isLandlord);
+        // setUsername(session?.username || '');
+        // setEmail(session?.user?.email || '');
+        // setProfilePic(session?.user?.image || '');
+        // setTempIsLandlord(isLandlord);
         setErrors({});
     };
 
@@ -143,18 +141,9 @@ const Profile = () => {
                             />
                         </div>
                         <div>
-                            <label className="block text-lg font-medium text-muted-foreground mb-1">Email:</label>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={handleEmailChange}
-                                disabled={!editChanges}
-                                className={`w-full rounded-lg ${editChanges
-                                    ? 'border-2 border-muted focus:border-blue-500 bg-background'
-                                    : 'border-transparent bg-muted'
-                                    } px-3 py-2 focus:outline-none transition-colors`}
-                            />
-                        </div>
+    <label className="block text-lg font-medium text-muted-foreground mb-1">Email:</label>
+    <p className="w-full rounded-lg border-transparent bg-muted px-3 py-2">{email}</p>
+</div>
                         <div>
                             <label className="block text-lg font-medium text-muted-foreground mb-1">Mode:</label>
                             {editChanges ? (

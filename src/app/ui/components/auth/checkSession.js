@@ -13,10 +13,10 @@ export function checkSession() {
     useEffect(() => {
         const checkSession = async () => {
             if (status === 'loading') {
-                return; // Do nothing while loading
+                return; 
             }
             if (!session) {
-                router.push('/login'); // Redirect to login if not authenticated
+                router.push('/login'); 
             }
         }
         checkSession();
