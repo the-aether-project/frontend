@@ -2,17 +2,17 @@
 
 import { ArrowRight, Facebook, Zap, Shield, Share2, Instagram, Linkedin, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/app/ui/components/SessionProvider';
 import { useTheme } from 'next-themes';
 
 export default function Home() {
-  const { data: session } = useSession();
+  const { session } = useSession();
   const { theme } = useTheme();
 
   if (session) {
-    console.log(" There is session: ", session.user?.email);
+    console.log("Home Page: There is session: ", session.user?.email);
   } else {
-    console.log("No session");
+    console.log("Home page:No session");
   }
 
   return (

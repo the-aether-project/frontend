@@ -2,11 +2,11 @@
 
 import React from 'react';
 import "@/app/globals.css";
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/app/ui/components/SessionProvider';
 import { useRouter } from 'next/router';
 
 const AboutPage = () => {
-  const { data: session } = useSession();
+  const {  session } = useSession();
   // const router = useRouter();
 
   if (session) {

@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { signIn, useSession } from 'next-auth/react'
+import {  useSession } from '@/app/ui/components/SessionProvider'
 import Link from 'next/link'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
@@ -10,7 +10,7 @@ import { Bounce } from 'react-toastify'
 import "@/app/globals.css"
 
 const Signup = () => {
-  const { data: session, status } = useSession()
+  const {  session, status } = useSession()
   useEffect(() => {
     document.title = 'SignUp • Aether'
   }, [])
@@ -45,7 +45,7 @@ const Signup = () => {
     if (status === 'authenticated') {
       router.push('/dashboard')
       console.log("There is session")
-      console.log("session", session.user?.email)
+      console.log("session username is ", session.username)
     }
   }, [session, router])
 

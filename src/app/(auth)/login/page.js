@@ -1,14 +1,20 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { signIn, useSession } from 'next-auth/react'
+import { useSession} from "@/app/ui/components/SessionProvider"
 import Link from 'next/link'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
+
+import { checkSession } from '@/app/ui/components/auth/checkSession'
+// import { LoginStatusCheck } from '@/app/ui/components/auth/checkSession'
+
 import "@/app/globals.css"
+import { use } from 'react'
 
 const Login = () => {
   const router = useRouter()
-  const { data: session, status } = useSession()
+  
+  const { session,status, setSession, setStatus } = useSession()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -21,20 +27,21 @@ const Login = () => {
   }, [])
   // Redirect if already authenticated
   useEffect(() => {
-    if (status === 'authenticated') {
+    if (session) {
       router.push('/dashboard')
       console.log("There is session")
-      console.log("session", session.user?.email)
+      console.log("session username is: ", session.username)
     }
   }, [session, router])
-
+  checkSession();
   // Early return if session exists
-  if (status === 'authenticated') {
-    return null
-  }
-  if (status === 'loading') {
-    return <div>Loading...</div>
-  }
+  // if (status === 'authenticated') {
+  //   return null
+  // }
+  // if (status === 'loading') {
+  //   return <div>Loading...</div>
+  // }
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -63,7 +70,6 @@ const Login = () => {
     return newErrors
   }
 
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     const formErrors = validateForm()
@@ -75,7 +81,6 @@ const Login = () => {
 
     setIsLoading(true)
     try {
-     
       const response = await fetch('http://localhost:7878/api/authenticate-user/login', {
         method: 'POST',
         headers: {
@@ -86,6 +91,7 @@ const Login = () => {
           password: formData.password,
         }),
       })
+      console.log("response status:",response.status)
       if (!response.ok) {
         const errorResponse = await response.json() // Parse error message from server
         setErrors({
@@ -93,13 +99,19 @@ const Login = () => {
         })
         return;
       } else {
-        router.push('/dashboard')
         const data = await response.json()
+        localStorage.setItem('access_token', data.access_token) // Save token to local storage
+        setSession(data.message)
+        setStatus('authenticated')
+        setErrors({});
         console.log("token:", data.access_token)
-        console.log("status", data.status)
-        console.log("status", data.message)
+        console.log("status", status)
+        console.log("message",data.message)
+       
+       
       }
     } catch (error) {
+      console.error('Error during login',error);
       setErrors({ auth: 'Something went wrong. Please try again.' })
     } finally {
       setIsLoading(false)
@@ -107,9 +119,16 @@ const Login = () => {
   }
 
   const handleOAuthSignIn = (provider) => {
-    signIn(provider, {
-      callbackUrl: '/dashboard'
-    })
+    // signIn(provider, {
+    //   callbackUrl: '/dashboard'
+    // })
+    if (provider === 'github') {
+      window.location.href = 'http://localhost:7878/api/authenticate-github';
+      console.log("github")
+    } else if (provider === 'google') {
+      window.location.href = 'http://localhost:7878/api/authenticate-google';
+    }
+    
   }
 
   return (
@@ -250,3 +269,4 @@ const Login = () => {
 }
 
 export default Login
+

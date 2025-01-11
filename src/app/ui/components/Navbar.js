@@ -1,13 +1,12 @@
-
 "use client"
 import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import { Menu, X } from 'lucide-react'; // Using Lucide icons for standard mobile menu icons
 import Logout from './Logout';
+import { useSession } from './SessionProvider'; // Import the new useSession hook
 
 const Navbar = () => {
-  const { data: session } = useSession();
+  const { session, status } = useSession(); // Use the new useSession hook
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -16,6 +15,16 @@ const Navbar = () => {
 
   // Scroll effect for home page
   useEffect(() => {
+    if(session){
+      console.log("Navbar Session",session)
+      console.log("Navbar Session",session.username)
+      console.log("Navbar Session",session.email)
+      
+    }
+    else{
+      console.log("Navbar No Session",session)
+      console.log("status is in navbar",status)
+    }
     const handleScroll = () => {
       const heroHeight = window.innerHeight * 0.7;
       setIsScrolled(window.scrollY >= heroHeight);
@@ -131,7 +140,7 @@ const Navbar = () => {
         </div>
 
         <div className="p-4 space-y-4">
-          {(session ? authNavItems : unAuthNavItems).map((item) => (
+          {(status === 'authenticated' ? authNavItems : unAuthNavItems).map((item) => (
             <button
               key={item.path}
               onClick={() => navigateTo(item.path)}
@@ -141,15 +150,13 @@ const Navbar = () => {
             </button>
           ))}
 
-          {session && (
+          {status === 'authenticated' && (
             <div className="mt-4">
               <Logout />
             </div>
           )}
         </div>
       </div>
-
-     
     </nav>
   );
 };

@@ -1,8 +1,8 @@
 // hooks/useSessionData.js
-import { useSession } from "next-auth/react";
+import { useSession } from "./app/ui/components/SessionProvider";
 
 const useSessionData = () => {
-  const { data: session, status } = useSession();
+  const { session, status } = useSession();
   const isLoading = status === "loading";
   const isAuthenticated = !!session;
 

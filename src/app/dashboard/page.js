@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/app/ui/components/SessionProvider';
 import Card from '../ui/components/Card';
 import { Clock, MapPin } from 'lucide-react';
 import { FaMicrochip } from "react-icons/fa6";
@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 
 const DashboardPage = () => {
-    const { data: session, status } = useSession();
+    const {session,status } = useSession();
     const router = useRouter();
     const { theme } = useTheme();
     const [clickedMoreInfo, setClickedMoreInfo] = useState(false);

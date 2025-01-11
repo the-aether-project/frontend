@@ -6,7 +6,7 @@ const Security = () => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [is2FAEnabled, setIs2FAEnabled] = useState(true);
+    const [is2FAEnabled, setIs2FAEnabled] = useState(false);
 
     const handlePasswordChange = (e) => {
         e.preventDefault();

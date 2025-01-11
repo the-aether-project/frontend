@@ -1,11 +1,11 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/app/ui/components/SessionProvider';
 import { useRouter } from 'next/navigation';
 import { FaUserCircle, FaEdit, FaCamera, FaSave, FaTimes, FaWallet, FaDesktop } from 'react-icons/fa';
 
 const Profile = () => {
-    const { data: session, status } = useSession();
+    const {session, status } = useSession();
     const router = useRouter();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -33,7 +33,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (session) {
-            setUsername(session?.user?.name || '');
+            setUsername(session?.username || '');
             setEmail(session?.user?.email || '');
             setProfilePic(session?.user?.image || '');
             setTempIsLandlord(isLandlord);
@@ -127,7 +127,7 @@ const Profile = () => {
                 </div>
             </div>
             {/* Profile pic parts end here */}
-            <h2 className="text-xl my-0.5 text-center  font-semibold">{session?.user?.name || ''}</h2>
+            <h2 className="text-xl my-0.5 text-center  font-semibold">{session?.username || ''}</h2>
             {/* Main Content */}
             <div className="grid md:grid-cols-3 gap-6 mx-8 my-4">
                 <div className=" rounded-xl shadow-lg p-6 border-2 border-muted">

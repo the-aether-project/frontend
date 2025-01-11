@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { useSession } from '@/app/ui/components/SessionProvider';
 import { useRouter } from "next/navigation";
 import {
     FaUserCircle,
@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa";
 
 const PersonalInformation = () => {
-    const { data: session, status } = useSession();
+    const { session, status } = useSession();
     const router = useRouter();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -30,7 +30,7 @@ const PersonalInformation = () => {
 
     useEffect(() => {
         if (session) {
-            setUsername(session?.user?.name || "");
+            setUsername(session?.username || "");
             setEmail(session?.user?.email || "");
             setIsVerified(session?.user?.emailVerified || true);
             setGender(session?.user?.gender || "");

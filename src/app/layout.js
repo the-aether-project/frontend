@@ -6,6 +6,7 @@ import Navbar from "./ui/components/Navbar";
 import Footer from "./ui/components/Footer";
 import PageWrapper from './ui/components/PageWrapper.js'
 import { ThemeProvider } from "./ui/components/DarkMode/ThemeProvider";
+import SessionProvider from "./ui/components/SessionProvider";
 
 export const metadata = {
   title: {
@@ -27,7 +28,8 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          <SessionWrapper>
+          {/* <SessionWrapper> */}
+          <SessionProvider>
             <Navbar />
             <main className="min-h-screen bg-[size:20px_20px]">
               <PageWrapper>
@@ -35,7 +37,8 @@ export default function RootLayout({ children }) {
               </PageWrapper>
             </main>
             <Footer />
-          </SessionWrapper>
+          {/* </SessionWrapper> */}
+          </SessionProvider>
         </ThemeProvider>
       </body>
     </html>
