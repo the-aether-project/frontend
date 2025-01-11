@@ -1,19 +1,19 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X } from 'lucide-react'; // Using Lucide icons for standard mobile menu icons
+import { Menu, X } from 'lucide-react'; 
 import Logout from './Logout';
-import { useSession } from './SessionProvider'; // Import the new useSession hook
+import { useSession } from './SessionProvider'; 
 
 const Navbar = () => {
-  const { session, status } = useSession(); // Use the new useSession hook
+  const { session, status } = useSession(); 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const isHomePage = pathname === '/';
 
-  // Scroll effect for home page
+//  session check matra gareko yo useEffect  hataye ni kei xaina
   useEffect(() => {
     if(session){
       console.log("Navbar Session",session)
@@ -36,13 +36,13 @@ const Navbar = () => {
     }
   }, [isHomePage]);
 
-  // Navigation handler
+ 
   const navigateTo = (path) => {
     router.push(path);
     setIsMobileMenuOpen(false);
   };
 
-  // Determine active link style
+  
   const getLinkStyle = (path) => `
     ${pathname.startsWith(path)
       ? 'text-blue-500 font-semibold' 
@@ -50,15 +50,14 @@ const Navbar = () => {
     block py-2 transition-colors duration-300
     `;
 
-  // Authenticated user navigation items
   const authNavItems = [
     { label: 'Dashboard', path: '/dashboard' },
-    { label: 'Lend/Rent', path: '/mode' },
+    
     { label: 'Profile', path: '/profile' },
     { label: 'Settings', path: '/settings' }
   ];
 
-  // Unauthenticated user navigation items
+
   const unAuthNavItems = [
     { label: 'Sign Up', path: '/signup' },
     { label: 'Login', path: '/login' }
@@ -73,7 +72,7 @@ const Navbar = () => {
       transition-all duration-300
     `}>
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Logo */}
+        
         <button 
           onClick={() => router.push('/')} 
           className="text-white text-2xl font-bold"
@@ -81,7 +80,7 @@ const Navbar = () => {
           Aether
         </button>
 
-        {/* Desktop Navigation */}
+       
         <div className="hidden lg:flex space-x-6 items-center">
           {(session ? authNavItems : unAuthNavItems).map((item) => (
             <button
@@ -105,8 +104,8 @@ const Navbar = () => {
             </div>
           )}
         </div>
-
-        {/* Mobile Menu Toggle */}
+            {/* yo chai mobile ko lagi tyo side dropdown navbar */}
+       
         <div className="lg:hidden">
           <button 
             onClick={() => setIsMobileMenuOpen(true)}
@@ -118,7 +117,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Slide-Out Menu */}
+      
       <div 
         className={`
           fixed top-0 right-0 w-64 h-full 

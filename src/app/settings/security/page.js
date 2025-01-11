@@ -10,13 +10,13 @@ const Security = () => {
 
     const handlePasswordChange = (e) => {
         e.preventDefault();
-        // Handle password change logic here
+       //password change ko lagi api tanni ani aru kam ynha garnu,,
         console.log('Password changed:', { currentPassword, newPassword, confirmPassword });
     };
 
     const handle2FAToggle = () => {
         setIs2FAEnabled(!is2FAEnabled);
-        // Handle 2FA toggle logic here
+      //2fa ko lagi logic ynha handle garni hai
         console.log('2FA status:', is2FAEnabled);
     };
 

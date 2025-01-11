@@ -4,9 +4,9 @@ import { useSession} from "@/app/ui/components/SessionProvider"
 import Link from 'next/link'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
-
+import { verifySession } from '@/hooks/useSessionToken'
 import { checkSession } from '@/app/ui/components/auth/checkSession'
-// import { LoginStatusCheck } from '@/app/ui/components/auth/checkSession'
+
 
 import "@/app/globals.css"
 import { use } from 'react'
@@ -101,13 +101,12 @@ const Login = () => {
       } else {
         const data = await response.json()
         localStorage.setItem('access_token', data.access_token) // Save token to local storage
-        setSession(data.message)
-        setStatus('authenticated')
-        setErrors({});
-        console.log("token:", data.access_token)
-        console.log("status", status)
-        console.log("message",data.message)
-       
+        await verifySession(setSession, setStatus) // Verify session after getting the token
+      setStatus('authenticated')
+      setErrors({})
+      console.log("token:", data.access_token)
+      console.log("status", status)
+      console.log("message", data.message)
        
       }
     } catch (error) {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSession } from '@/app/ui/components/SessionProvider';
 import { useRouter } from 'next/navigation';
 import { FaUserCircle, FaEdit, FaCamera, FaSave, FaTimes, FaWallet, FaDesktop } from 'react-icons/fa';
-
+import { checkSession } from '../ui/components/auth/checkSession';
 const Profile = () => {
     const {session, status } = useSession();
     const router = useRouter();
@@ -16,20 +16,13 @@ const Profile = () => {
         { name: 'Device 2', specs: 'CPU: 8 cores, RAM: 32GB, GPU: NVIDIA RTX 3080' }
     ]);
     const [deviceImage, setDeviceImage] = useState('');
-    const [balance, setBalance] = useState(100); // Static balance
+    const [balance, setBalance] = useState(100); // yeslai dynamic banauna nabirsinu
     const [editChanges, setEditChanges] = useState(false);
     const [errors, setErrors] = useState({});
     const [isLandlord, setIsLandlord] = useState(true);
     const [tempIsLandlord, setTempIsLandlord] = useState(true);
 
-    useEffect(() => {
-        if (status === 'loading') {
-            return; // Do nothing while loading
-        }
-        if (!session) {
-            router.push('/login'); // Redirect to login if not authenticated
-        }
-    }, [session, status, router]);
+    checkSession();
 
     useEffect(() => {
         if (session) {
@@ -65,7 +58,7 @@ const Profile = () => {
     };
 
     const handleSaveChanges = () => {
-        // Save the updated username, email, password, and profile picture to the server
+       
         console.log('Changes saved:', { username, email, profilePic });
         setEditChanges(false)
         setIsLandlord(tempIsLandlord);
@@ -98,7 +91,7 @@ const Profile = () => {
                 <img src="https://m.media-amazon.com/images/I/81bc8mA3nKL._AC_UF1000,1000_QL80_.jpg" alt="" />
             </div>
             {/* Profile pic parts start here */}
-            <div className="relative -mt-16 flex justify-center">
+            <div className="relative -mt-16 flex justify-center profile-pic">
                 <div className="w-32 h-32 rounded-full bg-muted p-0.5 flex items-center text-center justify-center">
                     <label htmlFor="profile-pic-upload" className={`w-full h-full cursor-pointer flex items-center justify-center overflow-hidden ${editChanges ? '' : 'pointer-events-none'}`}>
                         {profilePic ? (

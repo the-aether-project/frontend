@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          {/* <SessionWrapper> */}
+         
           <SessionProvider>
             <Navbar />
             <main className="min-h-screen bg-[size:20px_20px]">
@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
               </PageWrapper>
             </main>
             <Footer />
-          {/* </SessionWrapper> */}
+          
           </SessionProvider>
         </ThemeProvider>
       </body>

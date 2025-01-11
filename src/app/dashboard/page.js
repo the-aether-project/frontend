@@ -6,7 +6,7 @@ import { Clock, MapPin } from 'lucide-react';
 import { FaMicrochip } from "react-icons/fa6";
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
-
+import { checkSession } from '../ui/components/auth/checkSession';
 const DashboardPage = () => {
     const {session,status } = useSession();
     const router = useRouter();
@@ -16,16 +16,8 @@ const DashboardPage = () => {
     const [selectedInfo, setSelectedInfo] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        if (status === 'loading') {
-            return; // Do nothing while loading
-        }
-        if (!session) {
-            router.push('/login'); // Redirect to login if not authenticated
-        } else {
-            setLoading(false); // Set loading to false if authenticated
-        }
-    }, [session, status, router]);
+   
+    checkSession();
 
     useEffect(() => {
         if (status === "authenticated") {

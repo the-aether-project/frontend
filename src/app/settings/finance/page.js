@@ -31,9 +31,7 @@ const FinanceSettings = () => {
     ]);
 
     const handleAccountLink = async (method) => {
-        // Here you would implement the actual account linking logic
-        // This would typically involve OAuth flow for PayPal
-        // And API integration for Esewa
+    //    payment integration ko part yesma handle garni ho
         console.log(`Linking ${method} account`);
     };
 

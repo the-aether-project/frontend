@@ -18,7 +18,6 @@ const SettingsLayout = ({ children }) => {
   const isActive = (path) => pathname.startsWith(path);
 
   useEffect(() => {
-    // Redirect to /settings/personal-info if the current path is /settings
     if (pathname === "/settings") {
       router.push("/settings/personal-info");
     }
