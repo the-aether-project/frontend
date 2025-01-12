@@ -40,24 +40,29 @@ export default function Home() {
      
       {/* How It Works Section */}
       <div className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
-        <div className="space-y-16">
-          {/* First Step */}
-          <div className={`flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8 ${theme === 'dark' ? ' bg-card text-foreground border border-white' : 'bg-white text-black'} p-6 rounded-lg shadow-lg`}>
-            <div className="relative w-full md:w-1/2">
-              <img src="/1st_step.jpeg" alt="First Step" className="w-full rounded-lg shadow-lg" />
-              <div className="absolute top-1 left-1 bg-blue-600 text-white text-xl font-bold rounded-full h-12 w-12 flex items-center justify-center shadow-md">1</div>
+        <h2 className="text-3xl font-bold text-center mb-12">How It Works ?</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
+          <div className="space-y-4 border border-r-full border-gray-300">
+            <div className="relative">
+              <img
+                src="/1st_step.jpeg"
+                alt="First Step"
+                className="w-full rounded-lg shadow-lg"
+              />
+              <div className="absolute -top-4 -left-4 w-12 h-12  bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
+                1
+              </div>
             </div>
-            <div className="md:w-1/2">
-              <h3 className="text-xl font-semibold text-center md:text-left">Connect Your Device</h3>
-              <p className="leading-relaxed">
+            <h3 className="text-xl font-semibold text-center">Join Aether</h3>
+            <div className=" p-6 rounded-lg ">
+              <p className="text-gray-700 leading-relaxed">
                 Begin by creating your Aether account and choosing your role - either as a
                 <span className="font-semibold text-blue-600"> Resource Provider </span>
                 or a
                 <span className="font-semibold text-green-600"> Resource User</span>.
                 As a Provider, you'll register your device by specifying its capabilities:
               </p>
-              <ul className="mt-3 space-y-2">
+              <ul className="mt-3 space-y-2 text-gray-600">
                 <li className="flex items-start">
                   <span className="mr-2">•</span>
                   Hardware specifications (CPU, RAM, GPU)
@@ -71,26 +76,31 @@ export default function Home() {
                   Pricing preferences
                 </li>
               </ul>
-              <p className="mt-3">
+              <p className="mt-3 text-gray-700">
                 Once registered, you can easily toggle your device's availability and start
                 earning when your computer would otherwise be idle.
               </p>
             </div>
           </div>
-
           {/* Second Step */}
-          <div className={`flex flex-col md:flex-row-reverse items-center space-y-4 md:space-y-0 md:space-x-8 ${theme === 'dark' ? ' bg-card text-foreground border border-white' : 'bg-white text-black'} p-6 rounded-lg shadow-lg`}>
-            <div className="relative w-full md:w-1/2">
-              <img src="/2nd_step.jpeg" alt="Second Step" className="w-full rounded-lg shadow-lg" />
-              <div className="absolute top-1 left-1 bg-blue-600 text-white text-xl font-bold rounded-full h-12 w-12 flex items-center justify-center shadow-md">2</div>
+          <div className="space-y-4 border border-r-full border-gray-300">
+            <div className="relative">
+              <img
+                src="/2nd_step.jpeg"
+                alt="Second Step"
+                className="w-full rounded-lg shadow-lg"
+              />
+              <div className="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
+                2
+              </div>
             </div>
-            <div className="md:w-1/2">
-              <h3 className="text-xl font-semibold text-center md:text-left">Select Best Resources</h3>
-              <p className="leading-relaxed">
-                As a <span className="font-semibold text-green-600">Resource User</span>, 
+            <h3 className="text-xl font-semibold text-center">Select Best Resources</h3>
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <p className="text-gray-700 leading-relaxed">
+                As a <span className="font-semibold text-green-600">Resource User</span>,
                 find the perfect device match using our advanced search filters. Specify exactly what you need:
               </p>
-              <ul className="mt-3 space-y-2">
+              <ul className="mt-3 space-y-2 text-gray-600">
                 <li className="flex items-start">
                   <span className="mr-2">•</span>
                   <div>
@@ -116,59 +126,71 @@ export default function Home() {
                   </div>
                 </li>
               </ul>
-              <p className="mt-3">
-                Compare multiple devices, check user ratings, and view performance metrics before making your selection. Once selected, make payments for the booked time slot. Our secure payment system ensures a safe transaction for both parties.
+              <p className="mt-3 text-gray-700">
+                Compare multiple devices, check user ratings, and view performance metrics before making your selection. Our secure payment system ensures a safe transaction for both parties.
               </p>
+
             </div>
           </div>
 
-          {/* Third Step */}
-          <div className={`flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8 ${theme === 'dark' ? ' bg-card text-foreground border border-white' : 'bg-white text-black'} p-6 rounded-lg shadow-lg`}>
-            <div className="relative w-full md:w-1/2">
-              <img src="/3rd_step.jpeg" alt="Third Step" className="w-full rounded-lg shadow-lg" />
-              <div className="absolute top-1 left-1 bg-blue-600 text-white text-xl font-bold rounded-full h-12 w-12 flex items-center justify-center shadow-md">3</div>
-            </div>
-            <div className="md:w-1/2">
-              <h3 className="text-xl font-semibold text-center md:text-left">Start Sharing</h3>
-              <p className="leading-relaxed">
-                Once you've selected your ideal device and made a deal, connecting and starting your work is seamless. Our platform ensures:
-              </p>
-              <ul className="mt-3 space-y-2">
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <div>
-                    <span className="font-medium">One-Click Connection:</span> Connect to your selected device instantly through our secure desktop application
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <div>
-                    <span className="font-medium">Real-time Monitoring:</span> Track resource usage, connection speed, and performance metrics live
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <div>
-                    <span className="font-medium">Secure Data Transfer:</span> End-to-end encryption ensures your work and data remain private
-                  </div>
-                </li>
-              </ul>
-              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-green-50 p-4 rounded-lg">
-                  <p className="text-sm text-green-800">
-                    <span className="font-semibold">For Users:</span> Access your remote workspace through any device with our cross-platform compatibility.
-                  </p>
-                </div>
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <p className="text-sm text-blue-800">
-                    <span className="font-semibold">For Providers:</span>
-                    Receive instant payments and ensure your device is protected from unauthorized access or illegal activities.
-                  </p>
-                </div>
+          {/* third step */}
+          <div className="space-y-4 border border-r-full border-gray-300">
+            <div className="relative">
+              <img
+                src="/3rd_step.jpeg"
+                alt="Third Step"
+                className="w-full rounded-lg shadow-lg"
+              />
+              <div className="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
+                3
               </div>
             </div>
-          </div>
+            <h3 className="text-xl font-semibold text-center">Start Sharing</h3>
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+    <p className="text-gray-700 leading-relaxed">
+      Once you've selected your ideal device, connecting and starting your work is seamless. Our platform ensures:
+    </p>
+    <ul className="mt-3 space-y-2 text-gray-600">
+      <li className="flex items-start">
+        <span className="mr-2">•</span>
+        <div>
+          <span className="font-medium">One-Click Connection:</span> Connect to your selected device instantly through our secure desktop application
         </div>
+      </li>
+      <li className="flex items-start">
+        <span className="mr-2">•</span>
+        <div>
+          <span className="font-medium">Real-time Monitoring:</span> Track resource usage, connection speed, and performance metrics live
+        </div>
+      </li>
+      <li className="flex items-start">
+        <span className="mr-2">•</span>
+        <div>
+          <span className="font-medium">Secure Data Transfer:</span> End-to-end encryption ensures your work and data remain private
+        </div>
+      </li>
+      
+    </ul>
+    <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="bg-green-50 p-4 rounded-lg">
+        <p className="text-sm text-green-800">
+          <span className="font-semibold">For Users:</span> Access your remote workspace through any device with our cross-platform compatibility.
+        </p>
+      </div>
+      <div className="bg-blue-50 p-4 rounded-lg">
+        <p className="text-sm text-blue-800">
+          <span className="font-semibold">For Providers:</span> Monitor device usage, receive instant notification.
+        </p>
+      </div>
+    </div>
+   
+  </div>
+          </div>
+
+
+
+        </div>
+
       </div>
 
       {/* Features Section */}

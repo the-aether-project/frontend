@@ -1,0 +1,1 @@
+# bcryptjs jsonwebtoken nodemailer react-hot-toast dot-env
