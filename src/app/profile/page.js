@@ -7,7 +7,7 @@ import { checkSession } from '@/components/ui/auth/checkSession';
 const Profile = () => {
     const { session, status } = useSession();
     const router = useRouter();
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState(session?.username || '');
     const [tempusername, setTempUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -118,7 +118,7 @@ const Profile = () => {
                 </div>
             </div>
             {/* Profile pic parts end here */}
-            <h2 className="text-xl my-0.5 text-center  font-semibold">{session?.username || ''}</h2>
+            <h2 className="text-xl my-0.5 text-center  font-semibold">{username|| ''}</h2>
             {/* Main Content */}
             <div className="grid md:grid-cols-3 gap-6 mx-8 my-4">
                 <div className=" rounded-xl shadow-lg p-6 border-2 border-muted">

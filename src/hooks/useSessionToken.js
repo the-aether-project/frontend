@@ -37,7 +37,7 @@ const useSessionToken = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    verifySession(setSession, setLoading);
+   verifySession(setSession, setLoading);
   }, []);
 
   return { session, loading };

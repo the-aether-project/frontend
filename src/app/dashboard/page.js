@@ -252,10 +252,10 @@ const DashboardPage = () => {
     useEffect(() => {
         console.log("sesison", session)
         console.log("dashboard status", status)
-        if (status == "authenticated") {
+        if (session) {
             handleSelection();
         }
-    }, [status])
+    }, [session])
 
     function handleCardClick(e) {
         e.preventDefault()

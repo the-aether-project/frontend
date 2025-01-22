@@ -7,9 +7,11 @@ import { useRouter } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Bounce } from 'react-toastify'
+import { checkSession } from '@/components/ui/auth/checkSession'
 import "@/app/globals.css"
 
 const Signup = () => {
+  
   const {  session, status } = useSession()
   useEffect(() => {
     document.title = 'SignUp • Aether'
@@ -21,6 +23,7 @@ const Signup = () => {
     password: '',
     confirmPassword: ''
   })
+
   const [showPassword, setShowPassword] = useState({
     password: false,
     confirmPassword: false
