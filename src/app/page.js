@@ -43,7 +43,7 @@ export default function Home() {
       <div className="container mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold text-center mb-12">How It Works ?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
-          <div className="space-y-4 border border-r-full border-gray-300">
+          <div className="space-y-4 border border-r-full border-gray-300 pb-4">
             <div className="relative">
               <img
                 src="/1st_step.jpeg"
@@ -58,7 +58,7 @@ export default function Home() {
            
           </div>
           {/* Second Step */}
-          <div className="space-y-4 border border-r-full border-gray-300">
+          <div className="space-y-4 border border-r-full border-gray-300 pb-4">
             <div className="relative">
               <img
                 src="/2nd_step.jpeg"
@@ -74,7 +74,7 @@ export default function Home() {
           </div>
 
           {/* third step */}
-          <div className="space-y-4 border border-r-full border-gray-300">
+          <div className="space-y-4 border border-r-full border-gray-300 pb-4">
             <div className="relative">
               <img
                 src="/3rd_step.jpeg"
