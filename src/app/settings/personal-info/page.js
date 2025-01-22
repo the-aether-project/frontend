@@ -22,6 +22,8 @@ const PersonalInformation = () => {
     const [tempIsLandlord, setTempIsLandlord] = useState(true);
     const [profilePic, setProfilePic] = useState("");
     const [editChanges, setEditChanges] = useState(false);
+    const [errors, setErrors] = useState({});
+
 
     useEffect(() => {
         if (status === "loading") return;
@@ -47,12 +49,26 @@ const PersonalInformation = () => {
             reader.readAsDataURL(file);
         }
     };
-
+    const handleUsernameChange = (e) => {
+        setUsername(e.target.value);
+    };
     const handleSaveChanges = () => {
         console.log("Changes saved:", { username, email, gender, profilePic });
         setEditChanges(false);
         setIsLandlord(tempIsLandlord);
     };
+    const handleModeChange = (e) => {
+        setTempIsLandlord(e.target.value === 'landlord');
+    };
+    const handleEditChanges = () => {
+        setEditChanges(!editChanges);
+    };
+    const handleCancelChanges = () => {
+        setEditChanges(false);
+        
+        setErrors({});
+    };
+
 
     if (status === "loading") return <div>Loading...</div>;
 
@@ -100,7 +116,7 @@ const PersonalInformation = () => {
                     <input
                         type="text"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={handleUsernameChange}
                         disabled={!editChanges}
                         className={`w-full rounded-lg ${editChanges
                             ? "border-2 border-input focus:border-blue-500 bg-background"
@@ -110,22 +126,10 @@ const PersonalInformation = () => {
                 </div>
 
                 <div>
-                    <label className="block text-lg font-medium text-muted-foreground mb-1">
-                        Email:
-                    </label>
-                    <div className="flex items-center gap-2">
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            disabled={!editChanges}
-                            className={`w-full rounded-lg ${editChanges
-                                ? "border-2 border-input focus:border-blue-500 bg-background"
-                                : "border-transparent bg-muted"
-                                } px-3 py-2 focus:outline-none transition-colors`}
-                        />
-                    </div>
+                    <label className="block text-lg font-medium text-muted-foreground mb-1">Email:</label>
+                    <p className="w-full rounded-lg border-transparent bg-muted px-3 py-2">{email}</p>
                 </div>
+
 
                 <div>
                     <label className="block text-lg font-medium text-muted-foreground mb-1">
@@ -177,7 +181,7 @@ const PersonalInformation = () => {
                                         type="radio"
                                         value="landlord"
                                         checked={tempIsLandlord}
-                                        onChange={(e) => setTempIsLandlord(e.target.value === 'landlord')}
+                                        onChange={handleModeChange}
                                         className="form-radio text-blue-600"
                                     />
                                     <span className="ml-2">Landlord</span>
@@ -187,7 +191,7 @@ const PersonalInformation = () => {
                                         type="radio"
                                         value="tenant"
                                         checked={!tempIsLandlord}
-                                        onChange={(e) => setTempIsLandlord(e.target.value === 'landlord')}
+                                        onChange={handleModeChange}
                                         className="form-radio text-blue-600"
                                     />
                                     <span className="ml-2">Tenant</span>
@@ -211,7 +215,7 @@ const PersonalInformation = () => {
                             <FaSave /> Save Changes
                         </button>
                         <button
-                            onClick={() => setEditChanges(false)}
+                            onClick={handleCancelChanges}
                             className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors flex items-center gap-2"
                         >
                             <FaTimes /> Cancel
@@ -219,7 +223,7 @@ const PersonalInformation = () => {
                     </>
                 ) : (
                     <button
-                        onClick={() => setEditChanges(true)}
+                        onClick={handleEditChanges}
                         className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
                     >
                         <FaEdit /> Edit Information

@@ -5,12 +5,14 @@ import { useRouter } from 'next/navigation';
 import { FaUserCircle, FaEdit, FaCamera, FaSave, FaTimes, FaWallet, FaDesktop } from 'react-icons/fa';
 import { checkSession } from '@/components/ui/auth/checkSession';
 const Profile = () => {
-    const {session, status } = useSession();
+    const { session, status } = useSession();
     const router = useRouter();
     const [username, setUsername] = useState('');
+    const [tempusername, setTempUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [profilePic, setProfilePic] = useState('');
+    const [temoprofilePic, setTempProfilePic] = useState('');
     const [devices, setDevices] = useState([
         { name: 'Device 1', specs: 'CPU: 4 cores, RAM: 16GB, GPU: NVIDIA GTX 1080' },
         { name: 'Device 2', specs: 'CPU: 8 cores, RAM: 32GB, GPU: NVIDIA RTX 3080' }
@@ -26,7 +28,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (session) {
-            setUsername(session?.username || '');
+            setTempUsername(session?.username || '');
             setEmail(session?.email || 'test@gmail.com');
             setProfilePic(session?.user?.image || '');
             setTempIsLandlord(isLandlord);
@@ -46,20 +48,21 @@ const Profile = () => {
     };
 
     const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
+        setTempUsername(e.target.value);
     };
 
-    
+
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     };
 
     const handleSaveChanges = () => {
-       
+
         console.log('Changes saved:', { username, email, profilePic });
         setEditChanges(false)
         setIsLandlord(tempIsLandlord);
+        setUsername(tempusername);
     };
 
     const handleEditChanges = () => {
@@ -72,10 +75,7 @@ const Profile = () => {
 
     const handleCancelChanges = () => {
         setEditChanges(false);
-        // setUsername(session?.username || '');
-        // setEmail(session?.user?.email || '');
-        // setProfilePic(session?.user?.image || '');
-        // setTempIsLandlord(isLandlord);
+      setTempUsername(username);
         setErrors({});
     };
 
@@ -131,7 +131,7 @@ const Profile = () => {
                             <label className="block text-lg font-medium text-muted-foreground mb-1">Username:</label>
                             <input
                                 type="text"
-                                value={username}
+                                value={tempusername}
                                 onChange={handleUsernameChange}
                                 disabled={!editChanges}
                                 className={`w-full rounded-lg ${editChanges
@@ -141,9 +141,9 @@ const Profile = () => {
                             />
                         </div>
                         <div>
-    <label className="block text-lg font-medium text-muted-foreground mb-1">Email:</label>
-    <p className="w-full rounded-lg border-transparent bg-muted px-3 py-2">{email}</p>
-</div>
+                            <label className="block text-lg font-medium text-muted-foreground mb-1">Email:</label>
+                            <p className="w-full rounded-lg border-transparent bg-muted px-3 py-2">{email}</p>
+                        </div>
                         <div>
                             <label className="block text-lg font-medium text-muted-foreground mb-1">Mode:</label>
                             {editChanges ? (

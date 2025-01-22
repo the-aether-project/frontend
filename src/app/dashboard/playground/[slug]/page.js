@@ -6,15 +6,14 @@ import { LuMousePointerClick } from "react-icons/lu";
 import { useState, useEffect, useRef } from "react";
 import { WebRTC } from "@/lib/webrtc";
 import { ws_handleMouseControl, ws_disconnectConnection } from "@/lib/apiClient";
-import { checkSession } from "@/components/ui/auth/checkSession";
-import { useSession } from "@/components/ui/SessionProvider";
+
+
 
 export default function Page() {
     const params = useParams()
     const [fullScreenMode, setFullScreenMode] = useState(false);
-    const { session,status } = useSession()
     const videoRef = useRef(null);
-  checkSession()
+
     function toggleFullScreen() {
         if (!document.fullscreenElement) {
             setFullScreenMode(true)

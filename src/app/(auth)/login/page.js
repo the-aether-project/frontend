@@ -28,19 +28,13 @@ const Login = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (session) {
-      router.push('/dashboard')
+      router.push('/lobby')
       console.log("There is session")
       console.log("session username is: ", session.username)
     }
   }, [session, router])
   checkSession();
-  // Early return if session exists
-  // if (status === 'authenticated') {
-  //   return null
-  // }
-  // if (status === 'loading') {
-  //   return <div>Loading...</div>
-  // }
+ 
   
 
   const handleChange = (e) => {
@@ -118,15 +112,14 @@ const Login = () => {
   }
 
   const handleOAuthSignIn = (provider) => {
-    // signIn(provider, {
-    //   callbackUrl: '/dashboard'
-    // })
+    
     if (provider === 'github') {
       window.location.href = 'http://localhost:7878/api/authenticate-github';
       console.log("github")
     } else if (provider === 'google') {
       window.location.href = 'http://localhost:7878/api/authenticate-google';
     }
+    verifySession(setSession, setStatus,setLoading)
     
   }
 

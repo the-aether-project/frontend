@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { useSession } from '@/components/ui/SessionProvider'
+import {  useSession } from "@/components/ui/SessionProvider"
 import Link from 'next/link'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Bounce } from 'react-toastify'
 import "@/app/globals.css"
-import AuthForm from '@/components/ui/form/AuthForm'
+
 const Signup = () => {
   const {  session, status } = useSession()
   useEffect(() => {
@@ -143,18 +143,170 @@ const Signup = () => {
   }
 
   return (
+    <div className="min-h-screen bg-background text-foreground">
+      <ToastContainer className="mt-4 lg:mt-9 relative" />
+      <div className="max-w-[1128px] mx-auto py-8">
+        <div className="mt-8 px-4">
+          <div className="max-w-[520px] mx-auto bg-muted rounded-lg p-6 shadow-2xl">
+            <h1 className="text-center text-3xl font-semibold mb-4">Sign Up</h1>
+            <p className="text-center text-sm text-foreground-muted mb-6">
+              Make the most of your idle resources
+            </p>
 
-    <  AuthForm
-      isSignUp={true}
-      handleSubmit={handleSubmit}
-      handleChange={handleChange}
-      errors={errors}
-      formData={formData}
-      showPassword={showPassword}
-      setShowPassword={setShowPassword}
-      isLoading={isLoading}
-    />
+            {errors.auth && (
+              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900 text-red-600 dark:text-red-300 rounded-md text-sm">
+                {errors.auth}
+              </div>
+            )}
 
+            <form onSubmit={handleSubmit} className="space-y-4 mb-4">
+              <div>
+                <input
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  placeholder="Username"
+                  className={`w-full px-3 py-2 border ${errors.username ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
+                />
+                {errors.username && (
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-300">{errors.username}</p>
+                )}
+              </div>
+
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  className={`w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
+                />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-300">{errors.email}</p>
+                )}
+              </div>
+
+              <div className="space-y-1">
+                <div className="relative">
+                  <input
+                    type={showPassword.password ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Password (8+ characters)"
+                    className={`w-full px-3 py-2 border ${errors.password ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                      } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(prev => ({ ...prev, password: !prev.password }))}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
+                  >
+                    {showPassword.password ? (
+                      <FaEyeSlash className="h-5 w-5" />
+                    ) : (
+                      <FaEye className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="text-sm text-red-600 dark:text-red-300">{errors.password}</p>
+                )}
+              </div>
+
+              <div className="space-y-1">
+                <div className="relative">
+                  <input
+                    type={showPassword.confirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    placeholder="Confirm password"
+                    className={`w-full px-3 py-2 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                      } rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(prev => ({ ...prev, confirmPassword: !prev.confirmPassword }))}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
+                  >
+                    {showPassword.confirmPassword ? (
+                      <FaEyeSlash className="h-5 w-5" />
+                    ) : (
+                      <FaEye className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+                {errors.confirmPassword && (
+                  <p className="text-sm text-red-600 dark:text-red-300">{errors.confirmPassword}</p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full bg-blue-600 text-white py-3 rounded-full font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? 'Creating account...' : 'Agree & Join'}
+              </button>
+            </form>
+
+            <div className="relative mb-0 mt-2">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-500 dark:border-gray-700"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-4 bg-muted text-gray-500 dark:text-gray-300">or</span>
+              </div>
+            </div>
+            <p className='text-xs p-4'>
+              By clicking Agree & Join, you agree to Aether's{' '}
+              <a href="" className='text-blue-600 dark:text-blue-400'>User Agreement</a>,{' '}
+              <a href="" className='text-blue-600 dark:text-blue-400'>Privacy Policy</a>, and{' '}
+              <a href="" className='text-blue-600 dark:text-blue-400'>Cookie Policy</a>.
+            </p>
+            <div className="space-y-3 mt-4">
+              <button
+                type="button"
+                onClick={() => signIn('google', { callbackUrl: '/' })}
+                className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700"
+              >
+                <img
+                  src="https://www.svgrepo.com/show/475656/google-color.svg"
+                  alt="Google"
+                  className="h-5 w-5 mr-3"
+                />
+                <span className="font-medium">Continue with Google</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => signIn('github', { callbackUrl: '/' })}
+                className="w-full flex items-center justify-center px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700"
+              >
+                <img
+                  src="https://www.svgrepo.com/show/512317/github-142.svg"
+                  alt="GitHub"
+                  className="h-5 w-5 mr-3"
+                />
+                <span className="font-medium">Continue with GitHub</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <p className="text-center mt-8 text-lg">
+          Already on Aether?{' '}
+          <Link href="/login" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">
+            Sign in
+          </Link>
+        </p>
+      </div>
+    </div>
   )
 }
+
 export default Signup
