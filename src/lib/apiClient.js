@@ -1,6 +1,6 @@
-const ADDRESS_URL = "http://0.0.0.0:7878"
+const ADDRESS_URL = "https://2a7f-2400-1a00-b060-ca29-a51a-3a57-52b5-d44d.ngrok-free.app"
 
-const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsImlhdCI6MTczNjY2MzU4MCwiZXhwIjoxNzM2NjY5NTgwfQ.cstHcuRRIAltRvbZQXq7XX7CRVIKDqK9Nvtag9wMbMY"
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsImlhdCI6MTczNzU2NTE5NSwiZXhwIjoxNzM3NTcxMTk1fQ.vKS6B6mckcCE2hJZrdMaRh2qLpFyhOwNCyKwYgpizwY"
 
 async function GET_Computers() {
     try {
@@ -70,27 +70,47 @@ let socket = null;
 async function ws_WebRTCServerResponse() {
 
     return new Promise((resolve, reject) => {
-        const timeout = setTimeout(() => {
-            reject(new Error('WebRTC answer timeout'));
-        }, 20000); // 10 second timeout
+        // const timeout = setTimeout(() => {
+        //     reject(new Error('WebRTC answer timeout'));
+        // }, 20000); // 10 second timeout
 
         socket.onmessage = function (event) {
             try {
                 const data = JSON.parse(event?.data);
                 if (data.type === "ANSWER" && data.sdp) {
-                    clearTimeout(timeout);
+                    // clearTimeout(timeout);
                     resolve(data.sdp);
                 } else if (data.type === "ERROR") {
-                    clearTimeout(timeout);
+                    // clearTimeout(timeout);
                     reject(new Error(data?.message || 'WebRTC connection error'));
                 }
             } catch (error) {
-                clearTimeout(timeout);
+                // clearTimeout(timeout);
                 reject(error);
             }
         };
     });
 }
+
+
+async function ws_landlorddevices() {
+    return new Promise((resolve, reject) => {
+
+        socket.onmessage = function (event) {
+            try {
+                const data = JSON.parse(event?.data);
+                if (data.type === "DEVICES") {
+                    resolve(data);
+                } else if (data.type === "ERROR") {
+                    reject(new Error(data?.message || 'Could not get devices of landlord'));
+                }
+            } catch (error) {
+                reject(error);
+            }
+        };
+    });
+}
+
 
 async function ws_WebRTCServer(offer, landlord_id = 1) {
     if (!socket || socket.readyState !== WebSocket.OPEN) {
@@ -110,6 +130,8 @@ async function ws_handleMouseControl(landlord_id = 1) {
 async function ws_disconnectConnection(uuid, landlord_id = 1) {
     await socket.send(JSON.stringify({ type: "DISCONNECT", uuid, landlord_id }))
 }
+
+
 
 async function webSocket() {
 
@@ -132,10 +154,10 @@ async function webSocket() {
             case "WS_CONNECTION":
                 console.log(data.message)
                 break
-            case "DEVICES":
-                console.log("hello device")
-                console.log("Devices are ", data.devices)
-                break
+            // case "DEVICES":
+            //     console.log("hello device")
+            //     console.log("Devices are ", data.devices)
+            //     break
             case "CONTROL_ACK":
                 console.log("got control ack", data)
                 break
@@ -148,6 +170,8 @@ async function webSocket() {
         console.info("__Websocket:__", event.type);
     }
 
+    return socket
+
 }
 
-export { ws_WebRTCServer, GET_Computers, GET_identification, POST_locallandlord, webSocket, ws_handleMouseControl, ws_disconnectConnection, ws_WebRTCServerResponse }
+export { ws_WebRTCServer, GET_Computers, GET_identification, POST_locallandlord, webSocket, ws_handleMouseControl, ws_disconnectConnection, ws_WebRTCServerResponse, ws_landlorddevices }

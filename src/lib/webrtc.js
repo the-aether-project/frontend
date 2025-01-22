@@ -45,7 +45,7 @@ async function WebRTC(videoRef) {
 
     peerConnection.onconnectionstatechange = () => {
         console.info("CONNECTION_STATE_CHANGE", peerConnection.connectionState)
-    }
+    };
 
     peerConnection.addEventListener("track", (event) => {
         if (event.track.kind == 'video') {

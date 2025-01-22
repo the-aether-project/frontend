@@ -36,6 +36,7 @@ export default function Page() {
 
     useEffect(() => {
         (async () => {
+            console.log("clicked webrtccall")
             await WebRTC(videoRef);
         })()
     }, [])

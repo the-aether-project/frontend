@@ -1,0 +1,52 @@
+[
+    {
+        "landlord_id": 1,
+        "info": {
+            "device": {
+                "cpu": [
+                    {
+                        "name": "<>",
+                        "size": 0
+                    }
+                ],
+                "gpu": [
+                    {
+                        "name": "<>",
+                        "size": 0
+                    }
+                ]
+            },
+            "display": {
+                "frame_rate": 24,
+                "height": 1080,
+                "width": 1920
+            },
+            "ip_addr": "0.0.0.0"
+        }
+    },
+    {
+        "landlord_id": 1,
+        "info": {
+            "device": {
+                "cpu": [
+                    {
+                        "name": "<>",
+                        "size": 0
+                    }
+                ],
+                "gpu": [
+                    {
+                        "name": "<>",
+                        "size": 0
+                    }
+                ]
+            },
+            "display": {
+                "frame_rate": 24,
+                "height": 1080,
+                "width": 1920
+            },
+            "ip_addr": "0.0.0.0"
+        }
+    }
+]
