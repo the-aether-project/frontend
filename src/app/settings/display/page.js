@@ -3,13 +3,14 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Sun, Moon, Monitor, Check } from "lucide-react";
-import { Button } from "@/app/ui/components/DarkMode/button";
-import { Switch } from "@/app/ui/components/DarkMode/switch";
+import { Button} from "@/components/ui/DarkMode/button";
+import { Switch } from "@/components/ui/DarkMode/switch";
+import { checkSession } from "@/components/ui/auth/checkSession";
 
 const DisplayPage = () => {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-
+  checkSession(); 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 

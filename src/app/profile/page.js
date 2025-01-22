@@ -1,9 +1,9 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { useSession } from '@/app/ui/components/SessionProvider';
+import { useSession } from '@/components/ui/SessionProvider'
 import { useRouter } from 'next/navigation';
 import { FaUserCircle, FaEdit, FaCamera, FaSave, FaTimes, FaWallet, FaDesktop } from 'react-icons/fa';
-import { checkSession } from '../ui/components/auth/checkSession';
+import { checkSession } from '@/components/ui/auth/checkSession';
 const Profile = () => {
     const {session, status } = useSession();
     const router = useRouter();

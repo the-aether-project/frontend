@@ -9,13 +9,14 @@ import { useRouter } from 'next/navigation'
 export function checkSession() {
     const { session, status } = useSession();
     const router = useRouter()
-
+    
     useEffect(() => {
         const checkSession = async () => {
             if (status === 'loading') {
                 return; 
             }
             if (!session) {
+                console.log("No session found by checksession")
                 router.push('/login'); 
             }
         }

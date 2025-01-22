@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSession } from '@/app/ui/components/SessionProvider';
+import { useSession } from "@/components/ui/SessionProvider";
 import { useRouter } from "next/navigation";
 import {
     FaUserCircle,
@@ -31,7 +31,7 @@ const PersonalInformation = () => {
     useEffect(() => {
         if (session) {
             setUsername(session?.username || "");
-            setEmail(session?.user?.email || "");
+            setEmail(session?.email || 'test@gmail.com');
             setIsVerified(session?.user?.emailVerified || true);
             setGender(session?.user?.gender || "");
             setProfilePic(session?.user?.image || "");

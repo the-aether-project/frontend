@@ -1,12 +1,11 @@
 
 import "./globals.css";
-import { fira_sans } from "./ui/fonts";
-import SessionWrapper from "./ui/components/SessionWrapper";
-import Navbar from "./ui/components/Navbar";
-import Footer from "./ui/components/Footer";
-import PageWrapper from './ui/components/PageWrapper.js'
-import { ThemeProvider } from "./ui/components/DarkMode/ThemeProvider";
-import SessionProvider from "./ui/components/SessionProvider";
+import { fira_sans } from "@/components/fonts";
+import Navbar from "@/components/ui/Navbar";
+import Footer from "./../components/ui/Footer";
+import PageWrapper from "@/components/ui/PageWrapper";
+import { ThemeProvider } from "@/components/ui/DarkMode/ThemeProvider";
+import SessionProvider from "@/components/ui/SessionProvider";
 
 export const metadata = {
   title: {

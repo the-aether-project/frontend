@@ -1,11 +1,11 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { useSession} from "@/app/ui/components/SessionProvider"
+import { useSession } from '@/components/ui/SessionProvider'
 import Link from 'next/link'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
 import { verifySession } from '@/hooks/useSessionToken'
-import { checkSession } from '@/app/ui/components/auth/checkSession'
+import { checkSession } from '@/components/ui/auth/checkSession'
 
 
 import "@/app/globals.css"
@@ -14,7 +14,7 @@ import { use } from 'react'
 const Login = () => {
   const router = useRouter()
   
-  const { session,status, setSession, setStatus } = useSession()
+  const { session,status, setSession, setStatus,setLoading } = useSession()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -101,8 +101,8 @@ const Login = () => {
       } else {
         const data = await response.json()
         localStorage.setItem('access_token', data.access_token) // Save token to local storage
-        await verifySession(setSession, setStatus) // Verify session after getting the token
-      setStatus('authenticated')
+        await verifySession(setSession, setStatus,setLoading) // Verify session after getting the token
+ 
       setErrors({})
       console.log("token:", data.access_token)
       console.log("status", status)

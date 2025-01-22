@@ -2,12 +2,12 @@
 
 import React from 'react';
 import "@/app/globals.css";
-import { useSession } from '@/app/ui/components/SessionProvider';
+import { useSession } from '@/components/ui/SessionProvider'
 import { useRouter } from 'next/router';
 
 const AboutPage = () => {
   const {  session } = useSession();
-  // const router = useRouter();
+ 
 
   if (session) {
     console.log("There is session");
