@@ -5,12 +5,12 @@ import { useTheme } from "next-themes";
 import { Sun, Moon, Monitor, Check } from "lucide-react";
 import { Button} from "@/components/ui/DarkMode/button";
 import { Switch } from "@/components/ui/DarkMode/switch";
-import { checkSession } from "@/components/ui/auth/checkSession";
+import { usecheckSession } from "@/components/ui/auth/checkSession";
 
 const DisplayPage = () => {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  checkSession(); 
+  usecheckSession(); 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 

@@ -237,7 +237,7 @@ import { Clock, MapPin } from 'lucide-react';
 import { FaMicrochip } from "react-icons/fa6";
 import { useTheme } from 'next-themes';
 import { webSocket } from '@/lib/apiClient';
-import { checkSession } from '@/components/ui/auth/checkSession';
+import { usecheckSession } from '@/components/ui/auth/checkSession';
 
 const DashboardPage = () => {
     const {  session, status } = useSession();
@@ -248,7 +248,7 @@ const DashboardPage = () => {
     const router = useRouter();
     const pathname = usePathname();
     const { theme } = useTheme();
-    checkSession();
+    usecheckSession();
     useEffect(() => {
         console.log("sesison", session)
         console.log("dashboard status", status)

@@ -1,37 +1,90 @@
-"use client";
+"use client"
 
 import React from 'react';
-import "@/app/globals.css";
-import { useSession } from '@/components/ui/SessionProvider'
-import { useRouter } from 'next/router';
+import { useTheme } from 'next-themes';
+import Image from 'next/image';
+import { Facebook, Instagram, Linkedin, MessageSquare } from 'lucide-react';
 
 const AboutPage = () => {
-  const {  session } = useSession();
- 
-
-  if (session) {
-    console.log("There is session");
-    console.log("session", session.user?.email);
-  }
+  const { theme } = useTheme();
 
   return (
-    <div className='min-h-screen p-6 bg-background text-foreground'>
-      <h1 className='font-medium text-xl'>
-        Hello, this is the about page. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et reiciendis nam ullam a corporis nisi cumque commodi fuga. Nulla, magni consequatur, laboriosam labore dolorum sed, iste ipsa explicabo fugit repellendus inventore id.
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus, molestias deleniti dicta a mollitia illum, error dolores maxime optio magnam vel, veniam sequi voluptate! Ex tempore vitae saepe unde nam rerum rem nesciunt velit voluptatem neque nobis dolores dolorem asperiores earum voluptatibus numquam eveniet, maiores iusto dicta possimus? Necessitatibus quo incidunt at, facere fugit, ea veniam error aliquid quos sed possimus voluptate? Earum eligendi ex, voluptatem fugiat illo nam distinctio consectetur dolore, dignissimos fugit inventore, soluta reiciendis minima et nostrum quidem atque! Soluta quis nulla sequi culpa, necessitatibus laudantium laboriosam voluptatibus quam tenetur, quisquam id aut. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt similique asperiores saepe mollitia enim voluptas nulla autem quia error officiis! Atque dolores accusantium quibusdam similique aut, provident ratione mollitia, architecto consequuntur cumque minus, distinctio harum. Aliquam expedita similique voluptatum id in ratione adipisci nobis reprehenderit delectus ad earum voluptatem aut nostrum quaerat, sint perferendis assumenda optio consequatur beatae ipsam molestias! Placeat similique tempore eaque sed beatae quis dolor provident eius ut itaque obcaecati blanditiis assumenda vel voluptatem magni vero aut soluta, inventore cumque neque harum voluptatum ex at. Veritatis odit dolores, doloremque sed exercitationem accusantium? Sint nihil necessitatibus temporibus quam iure accusamus ex hic. Eos molestias, delectus labore reprehenderit fuga ratione. Cumque praesentium illum impedit iusto quam doloremque consequuntur odit itaque dolorem magnam aperiam, quos excepturi placeat reiciendis!
-      </h1>
-      <h1 className='font-medium text-xl'>
-        Hello, this is the about page. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et reiciendis nam ullam a corporis nisi cumque commodi fuga. Nulla, magni consequatur, laboriosam labore dolorum sed, iste ipsa explicabo fugit repellendus inventore id.
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus, molestias deleniti dicta a mollitia illum, error dolores maxime optio magnam vel, veniam sequi voluptate! Ex tempore vitae saepe unde nam rerum rem nesciunt velit voluptatem neque nobis dolores dolorem asperiores earum voluptatibus numquam eveniet, maiores iusto dicta possimus? Necessitatibus quo incidunt at, facere fugit, ea veniam error aliquid quos sed possimus voluptate? Earum eligendi ex, voluptatem fugiat illo nam distinctio consectetur dolore, dignissimos fugit inventore, soluta reiciendis minima et nostrum quidem atque! Soluta quis nulla sequi culpa, necessitatibus laudantium laboriosam voluptatibus quam tenetur, quisquam id aut. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt similique asperiores saepe mollitia enim voluptas nulla autem quia error officiis! Atque dolores accusantium quibusdam similique aut, provident ratione mollitia, architecto consequuntur cumque minus, distinctio harum. Aliquam expedita similique voluptatum id in ratione adipisci nobis reprehenderit delectus ad earum voluptatem aut nostrum quaerat, sint perferendis assumenda optio consequatur beatae ipsam molestias! Placeat similique tempore eaque sed beatae quis dolor provident eius ut itaque obcaecati blanditiis assumenda vel voluptatem magni vero aut soluta, inventore cumque neque harum voluptatum ex at. Veritatis odit dolores, doloremque sed exercitationem accusantium? Sint nihil necessitatibus temporibus quam iure accusamus ex hic. Eos molestias, delectus labore reprehenderit fuga ratione. Cumque praesentium illum impedit iusto quam doloremque consequuntur odit itaque dolorem magnam aperiam, quos excepturi placeat reiciendis!
-      </h1>
-      <h1 className='font-medium text-xl'>
-        Hello, this is the about page. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et reiciendis nam ullam a corporis nisi cumque commodi fuga. Nulla, magni consequatur, laboriosam labore dolorum sed, iste ipsa explicabo fugit repellendus inventore id.
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus, molestias deleniti dicta a mollitia illum, error dolores maxime optio magnam vel, veniam sequi voluptate! Ex tempore vitae saepe unde nam rerum rem nesciunt velit voluptatem neque nobis dolores dolorem asperiores earum voluptatibus numquam eveniet, maiores iusto dicta possimus? Necessitatibus quo incidunt at, facere fugit, ea veniam error aliquid quos sed possimus voluptate? Earum eligendi ex, voluptatem fugiat illo nam distinctio consectetur dolore, dignissimos fugit inventore, soluta reiciendis minima et nostrum quidem atque! Soluta quis nulla sequi culpa, necessitatibus laudantium laboriosam voluptatibus quam tenetur, quisquam id aut. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt similique asperiores saepe mollitia enim voluptas nulla autem quia error officiis! Atque dolores accusantium quibusdam similique aut, provident ratione mollitia, architecto consequuntur cumque minus, distinctio harum. Aliquam expedita similique voluptatum id in ratione adipisci nobis reprehenderit delectus ad earum voluptatem aut nostrum quaerat, sint perferendis assumenda optio consequatur beatae ipsam molestias! Placeat similique tempore eaque sed beatae quis dolor provident eius ut itaque obcaecati blanditiis assumenda vel voluptatem magni vero aut soluta, inventore cumque neque harum voluptatum ex at. Veritatis odit dolores, doloremque sed exercitationem accusantium? Sint nihil necessitatibus temporibus quam iure accusamus ex hic. Eos molestias, delectus labore reprehenderit fuga ratione. Cumque praesentium illum impedit iusto quam doloremque consequuntur odit itaque dolorem magnam aperiam, quos excepturi placeat reiciendis!
-      </h1>
-      <h1 className='font-medium text-xl'>
-        Hello, this is the about page. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et reiciendis nam ullam a corporis nisi cumque commodi fuga. Nulla, magni consequatur, laboriosam labore dolorum sed, iste ipsa explicabo fugit repellendus inventore id.
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus, molestias deleniti dicta a mollitia illum, error dolores maxime optio magnam vel, veniam sequi voluptate! Ex tempore vitae saepe unde nam rerum rem nesciunt velit voluptatem neque nobis dolores dolorem asperiores earum voluptatibus numquam eveniet, maiores iusto dicta possimus? Necessitatibus quo incidunt at, facere fugit, ea veniam error aliquid quos sed possimus voluptate? Earum eligendi ex, voluptatem fugiat illo nam distinctio consectetur dolore, dignissimos fugit inventore, soluta reiciendis minima et nostrum quidem atque! Soluta quis nulla sequi culpa, necessitatibus laudantium laboriosam voluptatibus quam tenetur, quisquam id aut. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt similique asperiores saepe mollitia enim voluptas nulla autem quia error officiis! Atque dolores accusantium quibusdam similique aut, provident ratione mollitia, architecto consequuntur cumque minus, distinctio harum. Aliquam expedita similique voluptatum id in ratione adipisci nobis reprehenderit delectus ad earum voluptatem aut nostrum quaerat, sint perferendis assumenda optio consequatur beatae ipsam molestias! Placeat similique tempore eaque sed beatae quis dolor provident eius ut itaque obcaecati blanditiis assumenda vel voluptatem magni vero aut soluta, inventore cumque neque harum voluptatum ex at. Veritatis odit dolores, doloremque sed exercitationem accusantium? Sint nihil necessitatibus temporibus quam iure accusamus ex hic. Eos molestias, delectus labore reprehenderit fuga ratione. Cumque praesentium illum impedit iusto quam doloremque consequuntur odit itaque dolorem magnam aperiam, quos excepturi placeat reiciendis!
-      </h1>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-background text-foreground' : 'bg-gradient-to-b from-gray-50 to-white'}`}>
+      <div className="container mx-auto px-4 py-16">
+        <h1 className="text-5xl font-bold text-center mb-8">About Aether</h1>
+        <p className="text-xl text-center max-w-2xl mx-auto mb-12">
+          Aether is a platform designed to seamlessly share desktop resources across devices with enterprise-grade security. Our mission is to provide a fast, secure, and easy-to-use solution for resource sharing.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <div className="flex flex-col justify-center">
+            <h2 className="text-3xl font-bold mb-4">Our Mission</h2>
+            <p className="text-lg">
+              At Aether, we aim to revolutionize the way resources are shared across devices. Our platform ensures minimal latency, high security, and ease of use, making it the perfect solution for both personal and enterprise use.
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <Image src="/about1.webp" alt="Our Mission" width={500} height={300} className="rounded-lg shadow-lg bg-white" />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <div className="flex justify-center order-2 md:order-1">
+            <Image src="/about-ku.jpeg" alt="Our Story" width={500} height={300} className="rounded-lg shadow-lg" />
+          </div>
+          <div className="flex flex-col justify-center order-1 md:order-2">
+            <h2 className="text-3xl font-bold mb-4">Our Story</h2>
+            <p className="text-lg">
+              Aether was created as a semester project to address a local problem: helping students generate side income by renting their devices while in college. It also provides an opportunity for underprivileged students to use high-end devices for learning, which they otherwise couldn't afford. Our goal is to convert this solution into a sustainable business model.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <div className="flex flex-col justify-center">
+            <h2 className="text-3xl font-bold mb-4">Why Choose Us?</h2>
+            <p className="text-lg">
+              Aether stands out with its 99.9% uptime, 10ms average latency, and 24/7 active support. We are committed to providing a reliable and efficient service to our users.
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <Image src="/2nd_step.jpeg" alt="Why Choose Us" width={500} height={300} className="rounded-lg shadow-lg" />
+          </div>
+        </div>
+
+        <div className="text-center">
+          <h2 className="text-3xl font-bold mb-4">Join Our Community</h2>
+          <p className="text-lg mb-8">
+            Connect with us on social media to stay updated with the latest features, tips, and community highlights.
+          </p>
+          <div className="flex justify-center gap-4">
+            <a href="#" className="group flex flex-col items-center">
+              <div className="h-16 w-16 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                <Facebook className="h-8 w-8 text-blue-600" />
+              </div>
+              <span className="text-sm mt-2 block">Facebook</span>
+            </a>
+            <a href="#" className="group flex flex-col items-center">
+              <div className="h-16 w-16 bg-purple-100 rounded-full flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+                <MessageSquare className="h-8 w-8 text-purple-600" />
+              </div>
+              <span className="text-sm mt-2 block">Discord</span>
+            </a>
+            <a href="#" className="group flex flex-col items-center">
+              <div className="h-16 w-16 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                <Linkedin className="h-8 w-8 text-blue-600" />
+              </div>
+              <span className="text-sm mt-2 block">LinkedIn</span>
+            </a>
+            <a href="#" className="group flex flex-col items-center">
+              <div className="h-16 w-16 bg-pink-100 rounded-full flex items-center justify-center group-hover:bg-pink-200 transition-colors">
+                <Instagram className="h-8 w-8 text-pink-600" />
+              </div>
+              <span className="text-sm mt-2 block">Instagram</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

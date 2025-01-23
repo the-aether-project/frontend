@@ -23,7 +23,8 @@ const PersonalInformation = () => {
     const [profilePic, setProfilePic] = useState("");
     const [editChanges, setEditChanges] = useState(false);
     const [errors, setErrors] = useState({});
-
+    const [tempUsername, setTempUsername] = useState("");
+const [tempProfilePic, setTempProfilePic] = useState("");
 
     useEffect(() => {
         if (status === "loading") return;
@@ -33,10 +34,12 @@ const PersonalInformation = () => {
     useEffect(() => {
         if (session) {
             setUsername(session?.username || "");
+            setTempUsername(session?.username || "");
             setEmail(session?.email || 'test@gmail.com');
             setIsVerified(session?.user?.emailVerified || true);
             setGender(session?.user?.gender || "");
             setProfilePic(session?.user?.image || "");
+            setTempProfilePic(profilePic);
             setTempIsLandlord(isLandlord);
         }
     }, [session]);
@@ -45,17 +48,20 @@ const PersonalInformation = () => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onloadend = () => setProfilePic(reader.result);
+            reader.onloadend = () => setTempProfilePic(reader.result);
             reader.readAsDataURL(file);
         }
     };
     const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
+        setTempUsername(e.target.value);
     };
     const handleSaveChanges = () => {
         console.log("Changes saved:", { username, email, gender, profilePic });
-        setEditChanges(false);
+        setUsername(tempUsername);
+        setProfilePic(tempProfilePic);
         setIsLandlord(tempIsLandlord);
+        setEditChanges(false);
+        
     };
     const handleModeChange = (e) => {
         setTempIsLandlord(e.target.value === 'landlord');
@@ -65,7 +71,9 @@ const PersonalInformation = () => {
     };
     const handleCancelChanges = () => {
         setEditChanges(false);
-        
+        setTempUsername(username);
+        setTempProfilePic(profilePic);
+        setTempIsLandlord(isLandlord);
         setErrors({});
     };
 
@@ -82,9 +90,9 @@ const PersonalInformation = () => {
             <div className="flex items-center justify-between mb-8 space-x-8 rounded-3xl bg-muted px-4 py-2">
                 <div className="flex items-center space-x-4">
                     <div className="w-20 h-20 flex items-center rounded-full bg-background flex-shrink-0">
-                        {profilePic ? (
+                        {tempProfilePic ? (
                             <img
-                                src={profilePic}
+                                src={tempProfilePic}
                                 alt="Profile"
                                 className="w-full h-full rounded-full object-cover"
                             />
@@ -94,17 +102,23 @@ const PersonalInformation = () => {
                     </div>
                     <span className="font-medium">{username || "Username"}</span>
                 </div>
+                {editChanges && (
                 <div className="flex flex-col space-y-2">
+                    
+        
                     <label className="bg-blue-600 text-white px-2 py-2 rounded-lg cursor-pointer hover:bg-blue-700 transition-colors inline-block text-center">
                         Change Profile Photo
                         <input
                             type="file"
                             accept="image/*"
+                            disabled={!editChanges}
                             onChange={handleProfilePicChange}
                             className="hidden"
                         />
                     </label>
+                   
                 </div>
+                )}
             </div>
 
             {/* Information Fields */}
@@ -115,7 +129,7 @@ const PersonalInformation = () => {
                     </label>
                     <input
                         type="text"
-                        value={username}
+                        value={tempUsername}
                         onChange={handleUsernameChange}
                         disabled={!editChanges}
                         className={`w-full rounded-lg ${editChanges

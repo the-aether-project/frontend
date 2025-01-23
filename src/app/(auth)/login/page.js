@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
 import { verifySession } from '@/hooks/useSessionToken'
-import { checkSession } from '@/components/ui/auth/checkSession'
+import { usecheckSession } from '@/components/ui/auth/checkSession'
 
 
 import "@/app/globals.css"
@@ -33,7 +33,7 @@ const Login = () => {
       console.log("session username is: ", session.username)
     }
   }, [session, router])
-  checkSession();
+  usecheckSession();
  
   
 

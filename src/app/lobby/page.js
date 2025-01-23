@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { GET_identification, POST_locallandlord } from "@/lib/apiClient";
-import { checkSession } from "@/components/ui/auth/checkSession";
+import { usecheckSession } from "@/components/ui/auth/checkSession";
 import { useEffect } from "react";
 export default function Lobby() {
     const router = useRouter();
@@ -15,7 +15,7 @@ export default function Lobby() {
     const [messageToClient, setmessageToClient] = useState("");
     const [submissionClicked, setSubmissionClicked] = useState(false);
     
-    checkSession();
+    usecheckSession();
     function handleLandlordClick() {
         console.log("Clicked on landlord");
         setLandlordClicked(true);

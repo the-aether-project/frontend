@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSession } from '@/components/ui/SessionProvider'
 import { useRouter } from 'next/navigation';
 import { FaUserCircle, FaEdit, FaCamera, FaSave, FaTimes, FaWallet, FaDesktop } from 'react-icons/fa';
-import { checkSession } from '@/components/ui/auth/checkSession';
+import { usecheckSession } from '@/components/ui/auth/checkSession';
 const Profile = () => {
     const { session, status } = useSession();
     const router = useRouter();
@@ -11,8 +11,8 @@ const Profile = () => {
     const [tempusername, setTempUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [profilePic, setProfilePic] = useState('');
-    const [temoprofilePic, setTempProfilePic] = useState('');
+    const [profilePic, setProfilePic] = useState(session?.user?.image || '');
+    const [temprofilePic, setTempProfilePic] = useState('');
     const [devices, setDevices] = useState([
         { name: 'Device 1', specs: 'CPU: 4 cores, RAM: 16GB, GPU: NVIDIA GTX 1080' },
         { name: 'Device 2', specs: 'CPU: 8 cores, RAM: 32GB, GPU: NVIDIA RTX 3080' }
@@ -24,16 +24,18 @@ const Profile = () => {
     const [isLandlord, setIsLandlord] = useState(true);
     const [tempIsLandlord, setTempIsLandlord] = useState(true);
 
-    checkSession();
+    usecheckSession();
 
     useEffect(() => {
         if (session) {
-            setTempUsername(session?.username || '');
+            setTempUsername(username);
             setEmail(session?.email || 'test@gmail.com');
-            setProfilePic(session?.user?.image || '');
+            setTempProfilePic(profilePic);
             setTempIsLandlord(isLandlord);
         }
-        console.log("url : ", session?.user?.image)
+        else {
+            router.push('/login');
+        }
     }, [session]);
 
     const handleProfilePicChange = (e) => {
@@ -41,7 +43,7 @@ const Profile = () => {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setProfilePic(reader.result);
+                setTempProfilePic(reader.result);
             };
             reader.readAsDataURL(file);
         }
@@ -63,6 +65,7 @@ const Profile = () => {
         setEditChanges(false)
         setIsLandlord(tempIsLandlord);
         setUsername(tempusername);
+        setProfilePic(temprofilePic);
     };
 
     const handleEditChanges = () => {
@@ -75,7 +78,8 @@ const Profile = () => {
 
     const handleCancelChanges = () => {
         setEditChanges(false);
-      setTempUsername(username);
+        setTempUsername(username);
+        setTempProfilePic(profilePic);
         setErrors({});
     };
 
@@ -85,14 +89,28 @@ const Profile = () => {
 
     return (
         <div className=" px-5 min-h-screen bg-background text-foreground rounded-lg  border-muted overflow-hidden mt-4">
-            <div className="h-[40vh] overflow-hidden flex justify-center space-x-16 border-b-2 border-muted py-4 bg-muted">
-                <img src="https://m.media-amazon.com/images/I/81bc8mA3nKL._AC_UF1000,1000_QL80_.jpg" alt="" />
+            <div className="h-[20vh] overflow-hidden flex justify-center space-x-16 border-b-2 border-muted py-4 bg-muted rounded-lg">
+                {/* <img src="https://m.media-amazon.com/images/I/81bc8mA3nKL._AC_UF1000,1000_QL80_.jpg" alt="" /> */}
             </div>
             {/* Profile pic parts start here */}
             <div className="relative -mt-16 flex justify-center profile-pic">
                 <div className="w-32 h-32 rounded-full bg-muted p-0.5 flex items-center text-center justify-center">
-                    <label htmlFor="profile-pic-upload" className={`w-full h-full cursor-pointer flex items-center justify-center overflow-hidden ${editChanges ? '' : 'pointer-events-none'}`}>
-                        {profilePic ? (
+                    <label
+                        htmlFor="profile-pic-upload"
+                        className={`w-full h-full cursor-pointer  flex items-center justify-center overflow-hidden ${editChanges ? '' : 'pointer-events-none'
+                            }`}
+                    >
+                        {editChanges ? (
+                            temprofilePic ? (
+                                <img
+                                    src={temprofilePic}
+                                    alt="User Avatar"
+                                    className="w-full h-full rounded-full object-cover"
+                                />
+                            ) : (
+                                <FaUserCircle className="w-full h-full text-muted-foreground" />
+                            )
+                        ) : profilePic ? (
                             <img
                                 src={profilePic}
                                 alt="User Avatar"
@@ -101,12 +119,13 @@ const Profile = () => {
                         ) : (
                             <FaUserCircle className="w-full h-full text-muted-foreground" />
                         )}
-                        {editChanges && (
-                            <div className="absolute bottom-0 text-2xl bg-blue-600 rounded-full p-2 shadow-lg flex">
+                       {editChanges && (
+                            <div className="absolute bottom-0 text-2xl bg-blue-600 rounded-full p-2  shadow-lg flex">
                                 <FaCamera className="h-6 w-6 text-white" />
                             </div>
                         )}
                     </label>
+
                     <input
                         type="file"
                         accept="image/*"
@@ -118,7 +137,7 @@ const Profile = () => {
                 </div>
             </div>
             {/* Profile pic parts end here */}
-            <h2 className="text-xl my-0.5 text-center  font-semibold">{username|| ''}</h2>
+            <h2 className="text-xl my-0.5 text-center  font-semibold">{username || ''}</h2>
             {/* Main Content */}
             <div className="grid md:grid-cols-3 gap-6 mx-8 my-4">
                 <div className=" rounded-xl shadow-lg p-6 border-2 border-muted">
