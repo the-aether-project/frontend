@@ -6,15 +6,15 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
 import { verifySession } from '@/hooks/useSessionToken'
 import { checkSession } from '@/components/ui/auth/checkSession'
-
+import { ADDRESS_URL } from '@/lib/apiClient'
 
 import "@/app/globals.css"
 import { use } from 'react'
 
 const Login = () => {
   const router = useRouter()
-  
-  const { session,status, setSession, setStatus,setLoading } = useSession()
+
+  const { session, status, setSession, setStatus, setLoading } = useSession()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -34,8 +34,8 @@ const Login = () => {
     }
   }, [session, router])
   checkSession();
- 
-  
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -46,7 +46,7 @@ const Login = () => {
     if (errors.auth) {
       setErrors((prev) => ({ ...prev, auth: '' }));
     }
-    if (errors[name]){
+    if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }))
     }
   }
@@ -75,7 +75,7 @@ const Login = () => {
 
     setIsLoading(true)
     try {
-      const response = await fetch('http://localhost:7878/api/authenticate-user/login', {
+      const response = await fetch(`${ADDRESS_URL}/api/authenticate-user/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ const Login = () => {
           password: formData.password,
         }),
       })
-      console.log("response status:",response.status)
+      console.log("response status:", response.status)
       if (!response.ok) {
         const errorResponse = await response.json() // Parse error message from server
         setErrors({
@@ -95,16 +95,16 @@ const Login = () => {
       } else {
         const data = await response.json()
         localStorage.setItem('access_token', data.access_token) // Save token to local storage
-        await verifySession(setSession, setStatus,setLoading) // Verify session after getting the token
- 
-      setErrors({})
-      console.log("token:", data.access_token)
-      console.log("status", status)
-      console.log("message", data.message)
-       
+        await verifySession(setSession, setStatus, setLoading) // Verify session after getting the token
+
+        setErrors({})
+        console.log("token:", data.access_token)
+        console.log("status", status)
+        console.log("message", data.message)
+
       }
     } catch (error) {
-      console.error('Error during login',error);
+      console.error('Error during login', error);
       setErrors({ auth: 'Something went wrong. Please try again.' })
     } finally {
       setIsLoading(false)
@@ -112,15 +112,15 @@ const Login = () => {
   }
 
   const handleOAuthSignIn = (provider) => {
-    
+
     if (provider === 'github') {
-      window.location.href = 'http://localhost:7878/api/authenticate-github';
+      window.location.href = `${ADDRESS_URL}/api/authenticate-github`;
       console.log("github")
     } else if (provider === 'google') {
-      window.location.href = 'http://localhost:7878/api/authenticate-google';
+      window.location.href = `${ADDRESS_URL}/api/authenticate-google`;
     }
-    verifySession(setSession, setStatus,setLoading)
-    
+    verifySession(setSession, setStatus, setLoading)
+
   }
 
   return (

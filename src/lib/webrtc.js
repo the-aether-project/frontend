@@ -1,6 +1,6 @@
 import { ws_WebRTCServer, ws_WebRTCServerResponse } from "./apiClient";
 
-async function WebRTC(videoRef) {
+async function WebRTC(videoRef, landlord_id) {
     const config = {
         sdpSemantics: 'unified-plan',
         iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
@@ -71,8 +71,8 @@ async function WebRTC(videoRef) {
                 peerConnection.addEventListener("icegatheringstatechange", checkState);
             }
         });
-
-        await ws_WebRTCServer(peerConnection.localDescription)
+        console.log("webrtc", landlord_id);
+        await ws_WebRTCServer(peerConnection.localDescription, landlord_id)
         const answer = await ws_WebRTCServerResponse();
         await peerConnection.setRemoteDescription(answer);
 

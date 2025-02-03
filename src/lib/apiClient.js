@@ -1,6 +1,10 @@
-const ADDRESS_URL = "https://2a7f-2400-1a00-b060-ca29-a51a-3a57-52b5-d44d.ngrok-free.app"
+"use client"
 
-const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsImlhdCI6MTczNzU2NTE5NSwiZXhwIjoxNzM3NTcxMTk1fQ.vKS6B6mckcCE2hJZrdMaRh2qLpFyhOwNCyKwYgpizwY"
+const ADDRESS_URL = "http://0.0.0.0:7878"
+
+
+const TOKEN = localStorage.getItem("access_token");
+// const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsImlhdCI6MTczNzU2NTE5NSwiZXhwIjoxNzM3NTcxMTk1fQ.vKS6B6mckcCE2hJZrdMaRh2qLpFyhOwNCyKwYgpizwY"
 
 async function GET_Computers() {
     try {
@@ -25,25 +29,34 @@ async function GET_Computers() {
 
 //It gets identification token for landlord to communicate with server
 async function GET_identification() {
-
     try {
-
+        console.log("I am logged in ___", TOKEN);
         const res = await fetch(`${ADDRESS_URL}/api/authorized/identification`, {
             method: "GET",
             headers: {
-                "Authorization": `Bearer ${TOKEN}`
-            }
-        })
+                "Authorization": `Bearer ${TOKEN}`,
+            },
+        });
+
         if (!res.ok) {
-            throw new Error("Could not get the token from server")
+            throw new Error(`Request failed with status ${res.status}`);
         }
-        const result = await res.json();
-        console.log("Got from identification", result)
-        return result.message;
+
+        // Log raw response body
+        const contentType = res.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+            const result = await res.json();
+            console.log("Got from identification", result);
+            return result.message;
+        } else {
+            const text = await res.text();
+            console.error("Unexpected response body:", text);
+            throw new Error("Response is not JSON");
+        }
     } catch (error) {
-        console.error("Error occured on getting identification token", error)
-        return;
+        console.error("Error occurred on getting identification token:", error);
     }
+
 }
 
 //It post identification token to the local landlord
@@ -70,6 +83,7 @@ let socket = null;
 async function ws_WebRTCServerResponse() {
 
     return new Promise((resolve, reject) => {
+
         // const timeout = setTimeout(() => {
         //     reject(new Error('WebRTC answer timeout'));
         // }, 20000); // 10 second timeout
@@ -112,7 +126,7 @@ async function ws_landlorddevices() {
 }
 
 
-async function ws_WebRTCServer(offer, landlord_id = 1) {
+async function ws_WebRTCServer(offer, landlord_id = 35) {
     if (!socket || socket.readyState !== WebSocket.OPEN) {
         throw new Error('WebSocket is not connected');
     }
@@ -140,7 +154,7 @@ async function webSocket() {
             socket.close()
         }
     })
-
+    console.log("I have login token as ", TOKEN);
     socket = new WebSocket(`${ADDRESS_URL}/v1/clients/ws?token=${TOKEN}`);
 
     socket.onopen = function (event) {
@@ -174,4 +188,4 @@ async function webSocket() {
 
 }
 
-export { ws_WebRTCServer, GET_Computers, GET_identification, POST_locallandlord, webSocket, ws_handleMouseControl, ws_disconnectConnection, ws_WebRTCServerResponse, ws_landlorddevices }
+export { ADDRESS_URL, ws_WebRTCServer, GET_Computers, GET_identification, POST_locallandlord, webSocket, ws_handleMouseControl, ws_disconnectConnection, ws_WebRTCServerResponse, ws_landlorddevices }

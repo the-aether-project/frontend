@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import {  useSession } from "@/components/ui/SessionProvider"
+import { useSession } from "@/components/ui/SessionProvider"
 import Link from 'next/link'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
@@ -8,9 +8,10 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Bounce } from 'react-toastify'
 import "@/app/globals.css"
+import { ADDRESS_URL } from '@/lib/apiClient'
 
 const Signup = () => {
-  const {  session, status } = useSession()
+  const { session, status } = useSession()
   useEffect(() => {
     document.title = 'SignUp • Aether'
   }, [])
@@ -96,7 +97,7 @@ const Signup = () => {
     setIsLoading(true)
     try {
       // Add your signup API call here
-      const response = await fetch('http://localhost:7878/api/authenticate-user/signup', {
+      const response = await fetch(`${ADDRESS_URL}/api/authenticate-user/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -107,7 +108,7 @@ const Signup = () => {
           password: formData.password
         })
       })
-     
+
       if (!response.ok) {
         const errorData = await response.json()
         setErrors({ auth: errorData.message || 'Something went wrong. Please try again.' })
@@ -118,7 +119,7 @@ const Signup = () => {
       const sessionData = await response.json()
       console.log("signup status:", sessionData.ok)
       console.log("signup message:", sessionData.message)
-      
+
       toast('Signup Succesful! Please login to continue', {
         position: "top-right",
         autoClose: 4000,
@@ -134,7 +135,7 @@ const Signup = () => {
       setTimeout(() => {
         router.push('/login')
       }, 4500)
-      
+
     } catch (error) {
       setErrors({ auth: 'Something went wrong. Please try again.' })
     } finally {

@@ -1,6 +1,7 @@
 
 
 import { useState, useEffect } from 'react';
+import { ADDRESS_URL } from '@/lib/apiClient';
 
 const verifySession = async (setSession, setLoading) => {
   const token = localStorage.getItem('access_token');
@@ -10,7 +11,7 @@ const verifySession = async (setSession, setLoading) => {
   }
 
   try {
-    const response = await fetch('http://localhost:7878/api/authorized/session', {
+    const response = await fetch(`${ADDRESS_URL}/api/authorized/session`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

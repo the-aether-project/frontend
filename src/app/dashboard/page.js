@@ -9,7 +9,7 @@ import { useTheme } from 'next-themes';
 import { checkSession } from '@/components/ui/auth/checkSession';
 import { webSocket } from '@/lib/apiClient';
 
-import { ws_landlorddevices } from '@/lib/apiClient';
+// import { ws_landlorddevices } from '@/lib/apiClient';
 
 const DashboardPage = () => {
     const { session, status } = useSession();
@@ -22,31 +22,8 @@ const DashboardPage = () => {
     const [clickedMoreInfo, setClickedMoreInfo] = useState(false);
     const [selectionMethod, setSelectionMethod] = useState("Lowest Rate");
     const [selectedInfo, setSelectedInfo] = useState(null);
-    const [systemInfo, setSystemInfo] = useState([{
-        "landlord_id": 1,
-        "info": {
-            "device": {
-                "cpu": [
-                    {
-                        "name": "don",
-                        "size": 0
-                    }
-                ],
-                "gpu": [
-                    {
-                        "name": "<>",
-                        "size": 0
-                    }
-                ]
-            },
-            "display": {
-                "frame_rate": 24,
-                "height": 1080,
-                "width": 1920
-            },
-            "ip_addr": "0.0.0.0"
-        }
-    }]);
+    const [systemInfo, setSystemInfo] = useState([]);
+    const [clickedLandlordid, setClickedLandlordid] = useState(1);
 
     useEffect(() => {
         console.log("dashboard status", status)
@@ -54,59 +31,6 @@ const DashboardPage = () => {
             handleSelection();
         }
     }, [status])
-
-    // const systemInfo = [
-    // {
-    //     "landlord_id": 1,
-    //     "info": {
-    //         "device": {
-    //             "cpu": [
-    //                 {
-    //                     "name": "don",
-    //                     "size": 0
-    //                 }
-    //             ],
-    //             "gpu": [
-    //                 {
-    //                     "name": "<>",
-    //                     "size": 0
-    //                 }
-    //             ]
-    //         },
-    //         "display": {
-    //             "frame_rate": 24,
-    //             "height": 1080,
-    //             "width": 1920
-    //         },
-    //         "ip_addr": "0.0.0.0"
-    //     }
-    // },
-    //     {
-    //         "landlord_id": 2,
-    //         "info": {
-    //             "device": {
-    //                 "cpu": [
-    //                     {
-    //                         "name": "hero",
-    //                         "size": 0
-    //                     }
-    //                 ],
-    //                 "gpu": [
-    //                     {
-    //                         "name": "<>",
-    //                         "size": 0
-    //                     }
-    //                 ]
-    //             },
-    //             "display": {
-    //                 "frame_rate": 24,
-    //                 "height": 1080,
-    //                 "width": 1920
-    //             },
-    //             "ip_addr": "0.0.0.0"
-    //         }
-    //     }
-    // ];
 
 
     //  useEffect for WebSocket initialization
@@ -121,6 +45,7 @@ const DashboardPage = () => {
                         const data = JSON.parse(event?.data);
                         if (data.type === "DEVICES") {
                             console.log("Devices___", data)
+                            console.log("devices devices", data.devices)
                             setSystemInfo(data.devices)
                         } else if (data.type === "ERROR") {
                             console.log("Error __-")
@@ -147,6 +72,7 @@ const DashboardPage = () => {
 
 
         if (!selectedInfo && systemInfo.length > 0) {
+            setClickedLandlordid(systemInfo[0].landlord_id)
             setSelectedInfo(systemInfo[0].info);
         }
     }, []);
@@ -162,6 +88,7 @@ const DashboardPage = () => {
             const landlord_id = selected_elm.dataset.id;
             const retrive_info = systemInfo.filter(each => each.landlord_id == landlord_id);
             if (retrive_info.length > 0) {
+                setClickedLandlordid(retrive_info[0].landlord_id)
                 setSelectedInfo(retrive_info[0].info);
             }
         }
@@ -225,7 +152,7 @@ const DashboardPage = () => {
                             <button
                                 className='border-2 py-3 px-9 rounded-lg font-medium bg-green-700 text-white hover:scale-[0.99]'
                                 onClick={() => {
-                                    router.push(`${pathname}/playground/${session?.username}`);
+                                    router.push(`${pathname}/playground/${clickedLandlordid}`);
                                 }}
                             >
                                 Rent now
